@@ -11,8 +11,6 @@ output:
     toc_float: yes
   pdf_document:
     toc: yes
-  word_document:
-    toc: yes
 link-citations: yes
 fontsize: 18pt
 description: Minicurso de R aplicado a manipulação de microdados da Codeplan
