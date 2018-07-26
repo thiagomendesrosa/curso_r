@@ -193,7 +193,7 @@ citation("survey")
 Dentro do R, alguns operadores básicos são constantemente utilizados. Os mais comuns são:
 
 ```{r, echo=F,results='asis'}
-knitr::kable(
+pander::pander(
 data.frame(Operadores=c("+","-","*","/","^ ou **", "%%","%/%"),
            Descrição=c("Adição","Subtração","Multiplicação",
                        "Divisão","Exponenciação","Resto da divisão","Divisão inteira")),
