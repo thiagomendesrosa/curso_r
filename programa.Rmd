@@ -1,0 +1,118 @@
+---
+title: "Introdução ao R - aplicação aos microdados da PDAD 2015"
+author: "Thiago Mendes Rosa"
+date: "24/07/2018"
+output: pdf_document
+mainfont: Times New Roman
+fontsize: 12pt
+  
+---
+
+# Programação do curso de introdução ao R
+
+**Instrutor**
+
+Thiago Mendes Rosa - Dieps\\Gerem
+
+Telefone: 61 3342-1720
+
+E-mail: \url{thiago.rosa@codeplan.df.gov.br}
+
+\bigskip
+
+Participações especiais:
+
+- Pedro Vaz - Dieps\\Gedeg: noções do Github
+- Luiz Rubens - Dipes\\Gereps: noções da linguagem SQL
+
+\bigskip
+
+**Data do curso**
+
+De 01/08/2018 a 03/08/2018
+
+Horário: 14:00 às 18:00
+
+Carga horária: 12 horas
+
+\bigskip
+
+**Público-alvo**
+
+- Estagiários da Codeplan
+- Pesquisadores da Codeplan
+- Pessoas da Codeplan com desejo de adquirir novos conhecimentos
+
+\bigskip
+
+**Requisitos básicos:**
+
+- Noções de lógica de programação
+- Noções básicas de estatística
+- Noções básicas de inglês (para facilitar pesquisas e entendimento das funções)
+
+\bigskip
+
+
+**Conteúdo:**
+
+O material completo do curso está disponível em:
+
+\url{https://thiagomendesrosa.github.io/curso_r/}.
+
+- Introdução:
+    - Por que usar o R e não outros softwares?
+    - RSutdio Server
+    - Banco de dados da Codeplan (Luiz Rubens)
+    - GitHub (Pedro Vaz)
+    - RMarkdown
+
+\bigskip    
+    
+    
+- Preliminares:
+    - Estrutura do RStudio Server;
+    - Pacotes;
+    - Operadores básicos;
+    - Utilizar chamada de funções;
+    - Criar uma função;
+    - Tipos de dados;
+    - Controles de fluxo;
+    - Operador Pipe;
+    - Onde encontrar ajuda;
+    
+\bigskip    
+    
+- Manipulação da PDAD 2015
+    - Carga da Pesquisa Distrital por Amostra de Domicílios 2015
+    - Consultas ao banco de dados da Codeplan
+    - Introdução ao `tidyverse`
+    - Utilização do pacote `survey` para pesquisas amostrais
+    - Estimativa de totais e proporções populacionais
+    - Estimativas dos intervalos de confiança
+    - Aplicação do operador `pipe`
+    - Manipulação de textos com o pacote `stringr`
+    - Manipulação de datas com o pacote `lubridate`
+    - Transformação de dados com `dplyr` e `tidyr`
+    - Visualização de dados com `ggplot2`
+    - Elaboração de relatórios com o `RMarkdown`
+    - Utilização do Github com o RStudio Server para controle e versionamento de projetos
+    
+# Participantes
+
+```{r, include=FALSE}
+participantes <- data.frame(
+  Nome=c("Pedro Henrique Oliveira de Souza",
+         "Renato Costa Coitinho",
+         "Douglas Gasparini de Lima"),
+  Lotação=c("Dieps/Gerem",
+            "Dieps/Gerem",
+            "Deura/Geurb"),
+  Email=c("pedro.souza@codeplan.df.gov.br",
+          "renato.coitinho@codeplan.df.gov.br",
+          "douglas.lima@codeplan.df.gov.br"),
+  Matrícula=c("88258",
+              "xxx",
+              "91002"))
+```
+
