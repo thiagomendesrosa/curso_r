@@ -668,6 +668,10 @@ library(RODBC)
 db <- RODBC::odbcConnect("db_codeplan", uid=matricula, pwd=senha)
 ```
 
+```{r, include=FALSE}
+rm(matricula,senha)
+```
+
 Pronto! Já estamos conectados ao banco de dados. Para consultar as tabelas disponíveis, utilizamos a função `sqlTables()`. O argumento desta função é o objeto com a conexão que fizemos para o banco de dados.
 
 ```{r}
@@ -1629,9 +1633,72 @@ amostra %>%
                    salario_real=survey_mean(salario_real, na.rm=T,vartype = "ci"))
 ```
 
-Repare que utilizamos a função `survey_mean()` para calcular a média de uma variável contínua desta vez. 
+Repare que utilizamos a função `survey_mean()` para calcular a média de uma variável contínua desta vez.
 
-Para o último gráfico, como estamos realizando uma estatística para o domicílio, precisamos filtrar para selecionarmos apenas uma informação. Fazemos isso pegando a linha referente apenas ao responsável, com auxílio da função `filter()`. Como maneira de facilitar a leitura dos dados, adicionamos os valores exatos de cada coluna com a função `geom_tex()`
+Vamos aproveitar a base do IPCA para aprendermos uma manipulação muito importante de bases de dados. Para fazer gráficos, o formato `long` é muito útil, enquanto o formato `wide` torna a visualização no formato tabela ou operações em colunas mais simples. Vamos treinar estes conceitos carregando a inflação, dos últimos 12 meses, do DF, do Brasil, de São Paulo e do Rio de Janeiro.
+
+```{r}
+inflacao <- RODBC::sqlQuery(db,"select referencia,descricao,distritofederal,riodejaneiro,saopaulo,brasil from inflacao.ipca_acum12m where codigo=0",stringsAsFactors=F) %>%
+  # Ajustar a variável de data
+  dplyr::mutate(referencia=lubridate::ymd_hms(referencia)) %>%
+  # Filtrar datas superiores ao período de referência da PDAD 2015
+  dplyr::filter(referencia>"2017-06-01")
+```
+
+Esse formato, em que temos cada coluna um caso, é o chamado formato `wide`. Caso a necessidade fosse fazer um gráfico da evolução da inflação em cada localidade, seria necessário construir uma geometria para cada caso. Vamos transformar esses dados para o formato `long`, em qua cada linha será um caso, utilizando o pacote `tidyr`.
+
+```{r}
+inflacao_long <-
+inflacao %>%
+  # Passar as colunas de cada localidade para o formato long, sendo
+  # a localidade armazenada na variável "Local" e os valores na variável
+  # "Inflação"
+  tidyr::gather("Local","Inflação",c(3:6))
+```
+
+A função `gather()` "junta" os valores para colocar cada caso em uma linha. Vamos fazer agora o caminho inverso, voltando para o formato `wide` com a função `spread`.
+
+```{r}
+inflacao<-
+# Retornar do formado long para o formato wide
+inflacao_long %>%
+  tidyr::spread(Local,`Inflação`)
+```
+
+O primeiro argumento é a variável chave, que irá assumir o papel de coluna, enquanto o segundo argumento é a variável dos valores, que irá popular estas colunas. Vamos contruir o gráfico da inflação destas localidades, utilizando o formato `long`.
+
+```{r}
+inflacao %>%
+  # Passar as colunas de cada localidade para o formato long, sendo
+  # a localidade armazenada na variável "Local" e os valores na variável
+  # "Inflação"
+  tidyr::gather("Local","Inflação",c(3:6)) %>%
+  # Construir o gráfico, com a referencia no eixo x (mudando para o formato data),
+  # a inflação no eixo y e o Local na cor
+  ggplot(aes(x=ymd(referencia),y=`Inflação`/100,colour=Local))+
+  # Construir as linhas, variando o tipo de linha conforme o local
+  geom_line(aes(linetype = Local))+
+  # Ajustar os rótudos dos meses do eixo x
+  scale_x_date(date_breaks = "2 month")+
+  # Ajustar o rótulo do eixo y
+  scale_y_continuous(labels = scales::percent)+
+  # Ajustar a legenda das cores, atribuindo cores específicas para as linhas
+  scale_colour_manual(labels=c("Brasil","Distrito Federal",
+                             "Rio de Janeiro","São Paulo"),
+                      values=c("cadetblue4","coral4",
+                               "darkgoldenrod","chartreuse4"))+
+  # Ajustar a legenda das linhas, combinando com a legenda anterior
+  scale_linetype_manual(labels=c("Brasil","Distrito Federal",
+                             "Rio de Janeiro","São Paulo"), 
+                        values=c(1:4))+
+  # Ajustar o rótulo dos eixos
+  labs(y="Inflação acumulada (12 meses)",
+       x="Período")+
+  # Alterar a posição da legenda
+  theme(legend.position = "bottom")
+```
+
+Para o último gráfico, como estamos realizando uma estatística para o domicílio, precisamos filtrar para selecionarmos apenas uma informação. Fazemos isso pegando a linha referente apenas ao responsável, com auxílio da função `filter()`. Como maneira de facilitar a leitura dos dados, adicionamos os valores exatos de cada coluna com a função `geom_text()`
 
 ```{r}
 # Construir o objeto com o esgotamento sanitário

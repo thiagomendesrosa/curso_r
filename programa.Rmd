@@ -2,10 +2,11 @@
 title: "Introdução ao R - aplicação aos microdados da PDAD 2015"
 author: "Thiago Mendes Rosa"
 date: "24/07/2018"
-output: pdf_document
+output:
+  word_document: default
+  pdf_document: default
 mainfont: Times New Roman
 fontsize: 12pt
-  
 ---
 
 # Programação do curso de introdução ao R
@@ -104,15 +105,19 @@ O material completo do curso está disponível em:
 participantes <- data.frame(
   Nome=c("Pedro Henrique Oliveira de Souza",
          "Renato Costa Coitinho",
-         "Douglas Gasparini de Lima"),
+         "Douglas Gasparini de Lima",
+         "Otávio Alves Cavalcante"),
   Lotação=c("Dieps/Gerem",
             "Dieps/Gerem",
-            "Deura/Geurb"),
+            "Deura/Geurb",
+            "Dieps/Gedeg"),
   Email=c("pedro.souza@codeplan.df.gov.br",
           "renato.coitinho@codeplan.df.gov.br",
-          "douglas.lima@codeplan.df.gov.br"),
+          "douglas.lima@codeplan.df.gov.br",
+          "otavio.cavalcante@codeplan.df.gov.br"),
   Matrícula=c("88258",
-              "xxx",
-              "91002"))
+              "xxxxx",
+              "91002",
+              "xxxx"))
 ```
 
