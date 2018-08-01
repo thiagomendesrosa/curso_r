@@ -44,7 +44,7 @@ Este minicurso de R será focado no `tidyverse` (universo "arrumado"), que conta
 
 Informações mais aprofundadas sobre o `tidyverse` estão disponíveis livro [R for data science](http://r4ds.had.co.nz/). 
 
-Esse curso foi baseado nos cursos [R pragmático](https://curso-r.github.io/ragmatic-book/) e [Curso de R](http://material.curso-r.com/rbase/), que podem ser consultados sempre que necessário. O livro [R para cientistas sociai](http://www.uesc.br/editora/livrosdigitais_20140513/r_cientistas.pdf) é uma outra boa fonte de informações.
+Esse curso foi baseado nos cursos [R pragmático](https://curso-r.github.io/ragmatic-book/) e [Curso de R](http://material.curso-r.com/rbase/), que podem ser consultados sempre que necessário. O livro [R para cientistas sociais](http://www.uesc.br/editora/livrosdigitais_20140513/r_cientistas.pdf) é uma outra boa fonte de informações.
 
 **Público-alvo**
 
@@ -66,10 +66,12 @@ Esse curso foi baseado nos cursos [R pragmático](https://curso-r.github.io/ragm
 - Operador `pipe`, manipulação de textos com o pacote `stringr`e datas com o pacote `lubridate`;
 - Transformação de dados com `dplyr` e `tidyr`;
 - Visualização de dados com `ggplot2`;
-- Utilização do pacote `survey` para pesquisas amostrais;
+- Utilização do pacote `survey` e `srvyr` para pesquisas amostrais;
 - Elaboração de relatórios com o `Rmarkdown`.
 
 # Introdução
+
+Como surgiu o R e quem o utiliza hoje?
 
 [Vídeo introdutório](https://youtu.be/u94oFWZCTCU)
 
@@ -79,7 +81,7 @@ Esse curso foi baseado nos cursos [R pragmático](https://curso-r.github.io/ragm
 
 - Um dos focos do R é análise de dados e a interatividade. Isso faz com que o R seja uma linguagem intuitiva e flexível.
 
-- Código ***aberto**: **sem pirataria!**
+- Código **aberto**: **sem pirataria!**
 
 - Constantemente atualizado;
 
@@ -89,11 +91,11 @@ Esse curso foi baseado nos cursos [R pragmático](https://curso-r.github.io/ragm
 
 - Versatilidade para integração com outras linguagens e ferramentas.
 
-- As versões mais recentes do R podem ser baixadas [neste site](https://www.r-project.org/). Uma versão específica, e também gratuita, aprimorada da Microsoft para certas plataformas está disponível em [neste site](https://mran.microsoft.com/download).
+- As versões mais recentes do R podem ser baixadas [neste site](https://www.r-project.org/). Uma versão específica, e também gratuita, aprimorada da Microsoft para certas plataformas está disponível [neste site](https://mran.microsoft.com/download).
 
 ## RStudio
 
-O RStudio é um ambiente integrado de desenvolvimento para a linguagem R. Ele ajuda a organizar os trabalhos desenvolvidos, dividindo os conteúdos em janelas. Ele, por exemplo, tem recursos que facilitam a escrita dos códigos (com atalhos de teclado e o recurso de auto completar). Além disso, possibilita que algumas funções sejam utilizadas via *point-and-click*. Acesse  [essa página](https://csgillespie.github.io/efficientR/set-up.html#rstudio) para maiores informações (em inglês).
+O RStudio é um ambiente integrado de desenvolvimento (*integrated development environment* -- IDE) para a linguagem R. Ele ajuda a organizar os trabalhos desenvolvidos, dividindo os conteúdos em janelas. Ele, por exemplo, tem recursos que facilitam a escrita dos códigos (com atalhos de teclado e o recurso de auto completar). Além disso, possibilita que algumas funções sejam utilizadas via *point-and-click*. Acesse  [essa página](https://csgillespie.github.io/efficientR/set-up.html#rstudio) para maiores informações (em inglês).
 
 Para baixar o RStudio, acesse [este site](https://www.rstudio.com/products/rstudio/download/preview/).
 
@@ -126,7 +128,8 @@ Atualmente, o banco conta com as seguintes bases de dados:
 - INPC;
 - Pesquisas 156;
 - Base de MEIs;
-- Cadastros de endereços.
+- Cadastros de endereços;
+- Finanças públicas anuais.
 
 Algumas bases de dados são de acesso público, enquanto outras são de acesso restrito. Todos os usuários, por padrão, possuem permissão de leitura das bases públicas. Para as bases restritas, é necessário preencher um termo de responsabilidade de uso, informando o projeto, o período de uso e os produtos a serem gerados com as informações. Esse termo deve ser aprovado pelo gestor da informação, antes que o acesso seja liberado pelo administrador do banco de dados. Esse processo visa a resguardar a confidencialidade das informações.
 
@@ -146,7 +149,7 @@ O **Markdown** é um sistema para tornar a escrita e a leitura de textos mais si
 
 No R, o RMarkdown, é um tipo de documento especial que contém tanto textos, no formato markdown, quanto códigos, em R. Os códigos em R podem ser inseridos diretamente no texto ou separados em estruturas específicas (*chunks*). Os códigos são executados sempre que o documento é processado para algum formato específico, que pode ser HTML (como esse documento que você está lendo), em PDF (formato $\LaTeX$) ou mesmo microsoft Word. Apresentações de slides também podem ser facilmente realizadas com o Rmarkdow, nos formatos `HTML` ou $\LaTeX$.
 
-Alguns relatórios e apresentações da Codeplan são produzidos em RMarkdown. As apresentações da pesquisa [156](https://codeplanprojetos.github.io/156_adasa_2018/) e os relatórios da PDAD 2018 estão sendo produzidos com esta ferramenta.
+Alguns relatórios e apresentações da Codeplan são produzidos em RMarkdown. As apresentações da pesquisa [156](https://codeplanprojetos.github.io/156_estacionamentos_rotativos_2018/) e os relatórios da PDAD 2018 estão sendo produzidos com esta ferramenta.
 
 Suas principais vantagens são a **velocidade**, **reprodutibilidade** e **eficiência** na produção destes relatórios. Por exemplo, a produção de relatórios para 31 Regiões Administrativas do DF, a partir dos dados da PDAD 2018, fica muito mais rápida e padronizada.
 
@@ -290,13 +293,19 @@ Apesar de ser necessário digitar mais caracteres para obter o resultado, chamar
 
 ## Criar uma função
 
-Você pode criar suas próprias funções do R. Por exemplo, ao invés de utilizar a função de soma `sum`, nós podemos criar nossa própria função de soma.
+Você pode criar suas próprias funções do R. Por exemplo, ao invés de utilizar a função de soma `sum`, nós podemos criar nossa própria função para somar dois valores.
 
 ```{r, warning=FALSE, message=FALSE, results='hide'}
 # Função para somar dois valores
 somar <- 
+  
+  # Abrir argumento para criação de função e informar dentro dos parenteses os parâmetros
   function(x,y){
+    
+    # Construir a operação de soma
   z = x + y
+  
+  # Retornar o resultado
   
   return(z)
   
@@ -376,10 +385,10 @@ solve(m)  # matriz inversa de m
 A lista é um tipo de objeto que pode armazenar diferentes classes em um mesmo local.
 
 ```{r}
-lista <- list(1,"galo",2i,2.61, TRUE,matrix(1:4)) # Criar uma lista
+lista <- list(1,"galo",2i,2.61,TRUE,matrix(1:4)) # Criar uma lista
 lista # Checar a lista criada
 lista[[2]] # Acessar o segundo elemento da lista
-lista <- list(a=1,b="galo",c=2i,d=2.61,e= TRUE,f=matrix(1:4)) # Criar uma lista, com nomes dos elementos
+lista <- list(a=1,b="galo",c=2i,d=2.61,e=TRUE,f=matrix(1:4)) # Criar uma lista, com nomes dos elementos
 ```
 
 Os fatores são particularmente importantes para a apresentação dos dados e para regressões. Eles servem para tratar vetores categóricos ou enumeráveis. Vamos ver um exemplo, utilizando logo após a função `table()`, para fazer uma tabulação simples dos valores.
@@ -739,7 +748,7 @@ RODBC::sqlTables(db) %>%
 
 Com as funções `filter` e `select`, conseguimos filtrar e selecionar colunas facilmente, de uma maneira rápida e elegante.
 
-Muitas vezes precisamos alterar o nome de uma coluna, seja para tornar seu entendimento mais fácil seja por questão de conveniência. Podemos fazer isso de duas maneiras: com a função `colnames()`, do pacote `base`, ou com a função `rename()`, do pacote `dplyr`.
+Muitas vezes precisamos alterar o nome de uma coluna, seja para tornar seu entendimento mais fácil, seja por questão de conveniência seja por necessidade. Podemos fazer isso de duas maneiras: com a função `colnames()`, do pacote `base`, ou com a função `rename()`, do pacote `dplyr`.
 
 ```{r}
 # Alterar o nome da coluna "TABLE_SCHEM" para Esquema
@@ -775,13 +784,16 @@ RODBC::sqlTables(db) %>%
 Agora que temos o nome das tabelas da PDAD, vamos consultar quais são as colunas existentes, por exemplo, naquela referente às pessoas, do ano de 2015. Para isso, vamos utilizar a função `sqlColumns`, informando a tabela específica no formato [nome do esquema].[nome da tabela].
 
 ```{r}
+# Consultar colunas
 colunas <- RODBC::sqlColumns(db,"pdad.pdad_2015_mor")
 ```
 
 Os nomes das variáveis disponíveis estarão na coluna `COLUMN_NAME`. O objeto carregado possui diversas informações, como o tipo e o tamanho da coluna. Como, neste momento, vamos trabalhar apenas com os nomes das colunas, vamos utilizar o que já aprendemos para visualizar somente esta informação.
 
 ```{r}
+# Consultar as colunas da tabela pdad_2015_mor
 RODBC::sqlColumns(db,"pdad.pdad_2015_mor") %>%
+  # Selecionar a coluna "COLUMN_NAME"
   dplyr::select(COLUMN_NAME)
 ```
 
@@ -799,7 +811,7 @@ pdad_moradores <- RODBC::sqlQuery(db,"select A01_DOM_RA,A05_DOM_MORADORES from p
 Vamos usar o que aprendemos para verificar, de maneira rápida, quantas pessoas foram entrevistadas em cada RA.
 
 ```{r}
-# Tabluar a amostra por RA
+# Tabular a amostra por RA
 table(pdad_moradores$A01_DOM_RA)
 ```
 
@@ -814,7 +826,9 @@ pdad_moradores <- RODBC::sqlQuery(db,"select * from pdad.pdad_2015_mor",
 Para termos o dicionário de dados da base de moradores prontamente acessível dentro do R, vamos carregado utilizando a função `readxl::read_excel()`.
 
 ```{r}
+# Listar os arquivos do diretório dados
 list.files("dados")
+# Carregar as informações do dicionário
 dic_moradores <- readxl::read_excel("dados/Dicionário-Base-Moradores-PDAD-2.xlsx")
 ```
 
@@ -952,7 +966,7 @@ RA %>%
        x="Região Administrativa")
 ```
 
-Agora, apresentação da informação ficou um pouco mais clara. Com o pacote `ggplot`, é possível alterar praticamente todos os aspectos de um gráfico. Existem alguns pacotes que carregam temas pré-configurados para serem utilizados com o `ggplot`. Vamos testar o pacote `ggthemr`. Basta rodar a função de mesmo nome e todos os gráficos subsequentes serão gerados com o novo tema.
+Agora, a apresentação da informação ficou um pouco mais clara. Com o pacote `ggplot`, é possível alterar praticamente todos os aspectos de um gráfico. Existem alguns pacotes que carregam temas pré-configurados para serem utilizados com o `ggplot`. Vamos testar o pacote `ggthemr`. Basta rodar a função de mesmo nome e todos os gráficos subsequentes serão gerados com o novo tema.
 
 ```{r}
 ggthemr::ggthemr()
