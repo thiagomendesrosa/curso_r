@@ -23,18 +23,13 @@ library(forcats)
 # Definir opções dos chunks
 knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE,
                       results = "hide")
-
 # Definir função para separador de milhar e decimal dos chunks
 knit_hooks$set(inline = function(x) {
   prettyNum(x, big.mark=".",decimal.mark = ",")
 })
-
 # Outras opções gerais e de pacotes específicos
 options(OutDec = ",")
 options(scipen=999)
-
-
-
 setwd("~/curso_r")
 ```
 
@@ -61,11 +56,14 @@ Esse curso foi baseado nos cursos [R pragmático](https://curso-r.github.io/ragm
 **Conteúdo:**
 
 - Introdução ao R;
-- Carga da Pesquisa Distrital por Amostra de Domicílios;
+- Projetos com controle de versão pelo github;
+- Acesso ao banco de dados da Codeplan;
+- Carga da Pesquisa Distrital por Amostra de Domicílios 2018;
 - Introdução ao `tidyverse`;
 - Operador `pipe`, manipulação de textos com o pacote `stringr`e datas com o pacote `lubridate`;
 - Transformação de dados com `dplyr` e `tidyr`;
 - Visualização de dados com `ggplot2`;
+- Elaboração de mapas;
 - Utilização do pacote `survey` e `srvyr` para pesquisas amostrais;
 - Elaboração de relatórios com o `Rmarkdown`.
 
@@ -89,7 +87,7 @@ Como surgiu o R e quem o utiliza hoje?
 
 - O R possui a possibilidade de adotar diversos pacotes. Estes pacotes são coleções de funções e/ou bases de dados desenvolvidos pela comunidade que utiliza a ferramenta. Os pacotes ficam disponíveis no [CRAN](https://cran.r-project.org/) -- *Comprehensive R Archive Network* -- que nada mais é do que uma coleção de sites da linguagem R e seus documentos relacionados.
 
-- Versatilidade para integração com outras linguagens e ferramentas.
+- Versatilidade para integração com outras linguagens e ferramentas. Já é possível rodar python diretamente no RStudio;
 
 - As versões mais recentes do R podem ser baixadas [neste site](https://www.r-project.org/). Uma versão específica, e também gratuita, aprimorada da Microsoft para certas plataformas está disponível [neste site](https://mran.microsoft.com/download).
 
@@ -107,11 +105,11 @@ A Codeplan conta com o RStudio server, o que significa que você pode acessar e 
 
 Uma vantagem de utilizar o Rserver é sua alta capacidade de processamento, quando comparado com as máquinas locais, contando atualmente com 32GB de memória RAM e um processador de 32 núcleos.
 
-Além disso, os pacotes instalados para a realização de um projeto ficam disponíveis para os demais usuários da empresa, sendo periodicamente atualizados pelo administrador do servidor. Isso facilita a reprodutibilidade dos códigos escritos por outros usuários, auxiliando também na continuidade de pesquisas e projetos. Sempre que precisar instalar um pacote, comunique o administrador do servidor para que ele também fique disponível para os demais usuários. Caso você necessite um pacote que demande alguma atualização do servidor, contate também o administrador.
+Além disso, os pacotes instalados para a realização de um projeto ficam disponíveis para os demais usuários da empresa, sendo periodicamente atualizados pelo administrador do servidor. Isso facilita a reprodutibilidade dos códigos escritos por outros usuários, auxiliando também na continuidade de pesquisas e projetos. Sempre que precisar instalar um pacote, comunique o administrador do servidor para que ele também fique disponível para os demais usuários. Caso você necessite um pacote que demande alguma atualização do servidor, contate o administrador do servidor.
 
 ## Banco de dados da Codeplan
 
-A Codeplan conta com um banco de dados com as principais pesquisas da empresa já organizadas e prontas para uso, além de outras fontes de dados secundárias bastante utilizadas em pesquisas (e.g. IBGE). A vantagem de se utilizar um banco de dados centralizado é que todos os pesquisadores usem a mesma fonte de informação para a produção de relatórios, garantindo consistência aos produtos gerados.
+A Codeplan conta com um banco de dados com as principais pesquisas da empresa, já organizadas e prontas para uso, além de outras fontes de dados secundárias bastante utilizadas em pesquisas (e.g. IBGE). A vantagem de se utilizar um banco de dados centralizado é que todos os pesquisadores usam a mesma fonte de informação para a produção de relatórios, garantindo consistência aos produtos gerados.
 
 Além disso, as bases utilizadas em um trabalho ficam à disposição dos demais pesquisadores da empresa, evitando o trafego de informações localmente. Quanto mais usuários estiverem utilizando a mesma fonte de dados, mais fácil fica para validar as informações e proceder eventuais correções, beneficiando todos os usuários. 
 
@@ -119,8 +117,14 @@ Atualmente, o banco conta com as seguintes bases de dados:
 
 - Pesquisa Distrital por Amostra de Domicílios;
 - Pesquisa Metropolitana por Amostra de Domicílios;
+- Pesquisa de Emprego e Desemprego;
 - Pesquisa Nacional por Amostra de Domicílios;
+- Pesquisa Nacional por Amostra de Domicílios Contínua;
+- Censo Demográfico;
+- Pesquisa de Orçamentos Familiares;
+- Cadastro de empresas da Receita Federal;
 - Relação Anual de Informações Sociais;
+- CAGED;
 - Censo escolar;
 - Prova Brasil;
 - Enem;
@@ -133,25 +137,25 @@ Atualmente, o banco conta com as seguintes bases de dados:
 
 Algumas bases de dados são de acesso público, enquanto outras são de acesso restrito. Todos os usuários, por padrão, possuem permissão de leitura das bases públicas. Para as bases restritas, é necessário preencher um termo de responsabilidade de uso, informando o projeto, o período de uso e os produtos a serem gerados com as informações. Esse termo deve ser aprovado pelo gestor da informação, antes que o acesso seja liberado pelo administrador do banco de dados. Esse processo visa a resguardar a confidencialidade das informações.
 
-As informações armazenadas no banco de dados podem ser facilmente carregadas pelo R (ou na maioria dos demais pacotes estatístico), por conexão ODBC -- acrônimo para *Open Database Connectivity*. O Rserver já está configurado para fazer esta conexão, enquanto as máquinas locais podem ser facilmente configuradas seguindo [esses passos](https://msdn.microsoft.com/pt-br/library/79hh5st2.aspx?f=255&MSPPError=-2147217396). As bases são acessadas com o pacote `RODBC`, através de consultas SQL (*Structured Query Language*), que nada mais é que uma linguagem estruturada para realizar consultas em bancos de dados.
+As informações armazenadas no banco de dados podem ser facilmente carregadas pelo R (ou na maioria dos demais pacotes estatístico), por conexão ODBC -- acrônimo para *Open Database Connectivity*. O Rserver já está configurado para fazer esta conexão, enquanto as máquinas locais podem ser facilmente configuradas seguindo [esses passos](https://msdn.microsoft.com/pt-br/library/79hh5st2.aspx?f=255&MSPPError=-2147217396). As bases são acessadas com o pacote `RODBC` ou `DBI`, através de consultas SQL (*Structured Query Language*), que nada mais é que uma linguagem estruturada para realizar consultas em bancos de dados.
 
 ## GitHub
 
 O **GitHub** é uma plataforma online de compartilhamento e armazenamento de códigos. Os projetos do GitHub são baseados no `git`, uma ferramenta de versionamento de software.
 
-A Codeplan utiliza o GitHub para gerenciar e versionar seus projetos, de modo a mantê-los organizados e atualizados, sem o risco de perder informações acidentalmente ou por alguma falha técnica. Outra vantagem é a característica colaborativa da plataforma, permitindo o acesso aos códigos, de qualquer lugar via internet, por outros pesquisadores. Se o repositório for público, qualquer pessoa pode contribuir com os projetos, proporcionando ganhos a todos os futuros usuários.
+A Codeplan utiliza o GitHub (ou o GitLab) para gerenciar e versionar seus projetos, de modo a mantê-los organizados e atualizados, sem o risco de perder informações acidentalmente ou por alguma falha técnica. Outra vantagem é a característica colaborativa da plataforma, permitindo o acesso aos códigos, de qualquer lugar via internet, por outros pesquisadores. Se o repositório for público, qualquer pessoa pode contribuir com os projetos, proporcionando ganhos a todos os futuros usuários.
 
-Caso você não tenha conta, aproveite essa oportunidade para criar uma no [Github](https://github.com/).
+Caso você não tenha conta, aproveite essa oportunidade para criar uma no [Github](https://github.com/). Vale lembrar que todos os pacotes desenvovidos no R ficam armazenados no GitHub e são de acesso público para qualquer usuário. Assim, você pode consultar a programação de todas as funções utilizadas no R.
 
 ## RMarkdown
 
 O **Markdown** é um sistema para tornar a escrita e a leitura de textos mais simples. Ele adiciona as formatações correspondentes a estrutura na qual você deseja apresentar seu texto. Tudo isso é feito de maneira simplificada, através de símbolos de teclado.
 
-No R, o RMarkdown, é um tipo de documento especial que contém tanto textos, no formato markdown, quanto códigos, em R. Os códigos em R podem ser inseridos diretamente no texto ou separados em estruturas específicas (*chunks*). Os códigos são executados sempre que o documento é processado para algum formato específico, que pode ser HTML (como esse documento que você está lendo), em PDF (formato $\LaTeX$) ou mesmo microsoft Word. Apresentações de slides também podem ser facilmente realizadas com o Rmarkdow, nos formatos `HTML` ou $\LaTeX$.
+No R, o RMarkdown, é um tipo de documento especial que contém tanto textos, no formato markdown, quanto códigos, em R. Os códigos em R podem ser inseridos diretamente no texto ou separados em estruturas específicas (*chunks*). Os códigos são executados sempre que o documento é processado para algum formato específico, que pode ser HTML (como esse documento que você está lendo), em PDF (formato $\LaTeX$) ou mesmo microsoft Word. Apresentações de slides também podem ser facilmente realizadas com o Rmarkdow, nos formatos `HTML` ou PDF ($\LaTeX$).
 
-Alguns relatórios e apresentações da Codeplan são produzidos em RMarkdown. As apresentações da pesquisa [156](https://codeplanprojetos.github.io/156_estacionamentos_rotativos_2018/) e os relatórios da PDAD 2018 estão sendo produzidos com esta ferramenta.
+Alguns relatórios e apresentações da Codeplan são produzidos em RMarkdown. Algumas apresentações da pesquisa [156](https://codeplanprojetos.github.io/156_estacionamentos_rotativos_2018/) e os relatórios da PDAD 2018 foram produzidos com esta ferramenta.
 
-Suas principais vantagens são a **velocidade**, **reprodutibilidade** e **eficiência** na produção destes relatórios. Por exemplo, a produção de relatórios para 31 Regiões Administrativas do DF, a partir dos dados da PDAD 2018, fica muito mais rápida e padronizada.
+Suas principais vantagens são a **velocidade**, **reprodutibilidade** e **eficiência** na produção destes relatórios. Por exemplo, a produção de relatórios para 31 Regiões Administrativas do DF, a partir dos dados da PDAD 2018, ficou muito mais rápida e padronizada.
 
 Para detalhes sobre como utilizar o RMarkdown, acesse [esse](http://r4ds.had.co.nz/r-markdown.html) e [esse](http://rmarkdown.rstudio.com/lesson-1.html) sites (em inglês).
 
@@ -165,7 +169,7 @@ O primeiro passo é efetuarmos o login no RStudio server da Codeplan. Para isso,
 
 Entre com suas credenciais e faça o login.
 
-O RStudio server estará dividido em quatro painéis: o superior à esquerda apresenta os scripts abertos para uso; o inferior à esquerda apresenta o console, local em que os comandos e seus resultados são apresentados. Nesse painel há também uma aba para o terminal do Linux; o superior direito apresenta o ambiente, com os objetos ativos na sessão. Há mais quatro abas, com o histórico dos comandos executados, as conexões, *build* (para desenvolvimentos) e o Git; por fim, o inferior direito apresenta o diretório de trabalho, com as pastas e arquivos. Há ainda mais quatro abas, que apresentam os *plots* gerados, os pacotes disponíveis na biblioteca, a janela de ajuda e a janela de visualização (utilizadas por alguns pacotes para mostrar conteúdos da web).
+O RStudio server estará dividido em quatro painéis: o superior à esquerda apresenta os scripts abertos para uso; o inferior à esquerda apresenta o console, local em que os comandos e seus resultados são apresentados. Nesse painel há também uma aba para o terminal do Linux; o superior direito apresenta o ambiente, com os objetos ativos na sessão. Há mais quatro abas, com o histórico dos comandos executados, as conexões, *build* (para desenvolvimentos) e o Git (se você estiver no ambiente de projetos); por fim, o inferior direito apresenta o diretório de trabalho, com as pastas e arquivos. Há ainda mais quatro abas, que apresentam os *plots* gerados, os pacotes disponíveis na biblioteca, a janela de ajuda e a janela de visualização (utilizadas por alguns pacotes para mostrar conteúdos da web).
 
 <img src="figuras/Rserver.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
 
@@ -174,6 +178,7 @@ Na parte superior, existe uma barra de tarefas, com a qual você pode criar novo
 Por todos os painéis existem atalhos úteis para executar diversas tarefas (abrir um novo script, criar um novo projeto, salvar o script atual, criar uma nova pasta etc.).
 
 ## Pacotes
+
 Uma das funções mais básicas é instalar e carregar um pacote no R. Por exemplo:
 
 ```{r, warning=FALSE, message=FALSE}
@@ -186,7 +191,7 @@ Note que o caractere `#` é utilizado para escrever comentários na codificaçã
 Tão importante quanto utilizar um pacote é citar ele no seu trabalho. Para tanto, utilize a função `citation()`.
 
 ```{r}
-citation("survey")
+citation("tidyverse")
 ```
   
 ## Operadores básicos
@@ -230,7 +235,7 @@ Algumas teclas de atalho podem ser bastante úteis na hora de escrever os códig
 - **Ctrl+Alt+I**: cria um *chunk* no R Markdown.
 - **Alt+Shift+K**: janela com todos os atalhos disponíveis.
 
-Agora vamos realizar algumas operações matemáticas básicas com o R. Digite diretamente no console ou abra um script, escreva os códigos e utilize o atalho de teclado para rodar o código.
+Agora vamos realizar algumas operações matemáticas básicas com o R. Digite diretamente no console ou abra um script, escreva os códigos e utilize o atalho de teclado para rodar o código (você pode rodar o código com o botão "Run" na parte superior da janela de script).
 
 ```{r warning=FALSE, message=FALSE}
 1 + 2 # Adição
@@ -269,7 +274,7 @@ O R também realiza testes lógicos. Vamos testar alguns deles.
 No último exemplo testamos se alguma das duas expressões era verdadeira. Para testar cada uma separadamente, precisamos de uma função de entrada de vários argumentos simultaneamente. A função utilizada para combinar é a `c()`, na qual seus argumentos são separados por vírgulas. Vamos refazer o último exemplo.
 
 ```{r, warning=F,message=F}
-c(2+2,1+4)==5 # 2 + 2 é igual a 5? 1 + 4 é igual a 5?
+c(2+2,1+4)==5 # 2 + 2 é igual a.---* 5? 1 + 4 é igual a 5?
 ```
 
 Agora, o R testa separadamente os dois casos.
@@ -310,7 +315,6 @@ somar <-
   return(z)
   
   }
-
 #Aplicar a função
 somar(2,4)
 ```
@@ -400,15 +404,16 @@ table(x) # Tabular os dados
 levels(x) # Verificar os níveis dos fatores
 ``` 
 
-A estrutura dos `data frames`, foco deste curso, será tratada em detalhes mais adiante, quando começarmos a manipular a PDAD 2015.
+A estrutura dos `data frames`, foco deste curso, será tratada em detalhes mais adiante, quando começarmos a manipular a PDAD 2018.
 
-Para finalizar, temos alguns números especiais no R: `-Inf`, `Inf`, `NA` e `NaN`. Os dois primeiros se referem ao infinito em ambas as direções, enquanto os dois últimos são os valores ausentes. Enquanto o `NaN` se refere a valores "não numéricos", funcionando como nulo, os valores ausentes propriamente ditos são da forma `NA`, podendo assumir diferentes classes.
+Para finalizar, temos alguns números especiais no R: `-Inf`, `Inf`, `NA` e `NaN`. Os dois primeiros se referem ao infinito em ambas as direções, enquanto os dois últimos são os valores ausentes. Enquanto o `NaN` se refere a valores "não numéricos", funcionando como nulo, os valores ausentes propriamente ditos são da forma `NA`, podendo assumir diferentes classes. Há ainda o objeto a classe `NULL`, que seria um objeto vazio. Usualmente ele é utilizado em definições de listas com tamanho zero.
 
 ```{r}
 1/Inf # Divisão de 1 por infinito
 -1/0 # Infinito - divisão de 1 por zero (conceito de limite)
 1/0-1/0 # Infinito menos infinito - Indefinido (não numérico)
 x <- NA # Missing value (valor ausente)
+x <- NULL # Vazio
 ```
 
 
@@ -421,17 +426,13 @@ Podemos fazer um teste lógico para que o R execute uma soma quando uma condiç�
 ```{r}
 # Criar um objeto com x com o valor 2
 x <- 2
-
 # Realizar uma soma se x é igual 2
-
 if(x==2){
   
   x+2
   
 }
-
 # Realizar uma soma se x é igual a 3
-
 if(x==3){
   
   x+2
@@ -444,7 +445,6 @@ Agora vamos usar o condicionante `if` juntamente com o condicionante `else`.
 ```{r}
 # Atribuir o valor 8 à x
 x <- 8
-
 # Testar se x é positivo ou negativo
 if(x < 0) {
   
@@ -458,17 +458,15 @@ if(x < 0) {
   
   "positivo"
 }
-
 ```
 
 Note que, sempre que um novo condicionante é adicionado, o RStudio adiciona uma seta para baixo, indicando onde se inicia o novo fluxo.
 
-O operador `for` é utilizado para realizar uma tarefa dada uma lista de valores. Vamos somar uma unidade aos valores listados entre 5 e 10. 
+O operador `for` é utilizado para realizar uma tarefa baseada em uma lista de valores. Vamos somar uma unidade aos valores listados entre 5 e 10. 
 
 ```{r}
 # Criar uma lista de índices
 i <- 1:10
-
 # Somar 1 aos valores de 5 a 10
 for(i in c(5:10)){
   
@@ -477,20 +475,16 @@ for(i in c(5:10)){
 }
 ```
 
-Por fim, temos  condicionante `while`. Ele executa a tarefa até que uma certa condição seja satisfeita. Por exemplo, vamos somar duas unidades a x enquanto o resultado é menor ou igual a 10.
+Por fim, temos  condicionante `while`. Ele executa a tarefa até que uma certa condição seja satisfeita. Por exemplo, vamos somar duas unidades a x enquanto o resultado é menor ou igual a 10. Esse condicionante pode, ser utilizado, por exemplo, para a maximização de funções.
 
 ```{r}
-
 x <- 1
-
 while (x<=10) {
   
  print (x)
-
  x=x+2
   
 }
-
 ```
 
 ## Operador Pipe
@@ -499,7 +493,6 @@ Com o R, nós podemos "aninhar" várias funções ao mesmo tempo. Por exemplo, s
 
 ```{r}
 x <- c(1:10) # Criar o vetor numérico
-
 round(sqrt(sum(x))) # Calcular a raíz quadrada da soma do vetor x, arredondando o resultado
 ```
 
@@ -521,17 +514,16 @@ Dentro de um mesmo código, é possível indentar as linhas, sempre que um novo 
 #             duração = "50min"), "geladeira", "20min")
 ```
 
-Mesmo assim, ainda resta alguma dificuldade para ler e entender o código de uma maneira mais clara e fluída. Essa é uma das vantagens de utilizar o operador pipe `%>%`. Ele realiza o seguinte comando, de maneira bastante intuitiva: **"use o resultado do lado esquerdo como argumento da função do lado direito"**. Para utilizá-lo, é necessário carregar algum pacote que leve o operador. Ao carregar o `tidyverse`, por exemplo, você já estará apto a utilizar o pipe.
+Mesmo assim, ainda resta alguma dificuldade para ler e entender o código de uma maneira mais clara e fluída. O operador pipe `%>%` é utilizado para facilitar a programação e a leitura, deixando o código mais arrumado. Ele realiza o seguinte comando, de maneira bastante intuitiva: **"use o resultado do lado esquerdo como argumento da função do lado direito"**. Para utilizá-lo, é necessário carregar algum pacote que leve o operador. Ao carregar o `tidyverse`, por exemplo, você já estará apto a utilizar o pipe (originalmente disponível com o pacote `magrittr`)
 
 Vamos testar o operador pipe para calcular novamente a raiz quadrada da soma de um vetor.
 
 ```{r}
 x <- c(1:10)
-
 x %>% sum %>% sqrt %>% round
 ```
 
-Observe que a escrita fica muito mais intuitiva. Para o caso do bolo:
+Observe que a escrita fica muito mais intuitiva e elegante. Para o caso do bolo:
 
 ```{r}
 # recipiente(rep("farinha", 2), "água", "fermento", "leite", "óleo") %>%
@@ -548,7 +540,7 @@ A utilização do pipe será muito importante para a manipulação das bases de 
 
 Há várias maneiras de encontrar ajuda sobre um pacote específico. Por exemplo, você pode acessar os detalhes da função `psych::describe` posicionado o cursor próximo a função e pressionando a tecla `F1`.
 
-Uma outra maneira é colocar uma interrogação $?$ antes da função para a qual se quer ajuda e executar o comando para o console. Uma terceira opção é utilizar a função `help`.
+Uma outra maneira é colocar uma interrogação $?$ antes da função para a qual se quer ajuda e executá-la. Uma terceira opção é utilizar a função `help`.
 
 ```{r warning=FALSE, message=FALSE}
 ?psych::describe
@@ -559,7 +551,7 @@ help("psych")
 help(psych)
 ```
 
-Para uma pesquisa mais ampla, que irá escanear todos os documentos do pacote instalado na sua biblioteca, você pode utilizar o símbolo $??$ antes da função ou utilizar diretamente a função `help.search`
+Para uma pesquisa mais ampla, que irá escanear todos os documentos de pacotes instalados na sua biblioteca, você pode utilizar o símbolo $??$ antes da função ou utilizar diretamente a função `help.search`
 
 ```{r, warning=FALSE, message=FALSE}
 ??psych
@@ -570,7 +562,6 @@ Por fim, outra forma de realizar pesquisas, utilizando a internet é com a funç
 
 ```{r warning=FALSE, message=FALSE}
 RSiteSearch("psych") # Pesquisar um termo
-RSiteSearch("{linear model}") # Pesquisar uma expressão
 ```
 
 O site [stackoverflow](https://stackoverflow.com/questions/tagged/r) é outra excelente fonte de informação. É muito possível que a dúvida ou o problema que você está encontrando em alguma programação já foi enfrentado por outro usuário. Assim, basta pesquisar sobre sua dúvida neste site (geralmente, feitas e respondidas em inglês).
@@ -579,13 +570,13 @@ Por fim, uma boa e velha máquina de buscas é fundamental. Quase todas as repos
 
 <img src="http://material.curso-r.com/rbase/figures/ajuda_google.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
 
-# Carga da PDAD 2015
+# Carga da PDAD 2018
 
-Vamos iniciar a atividade de manipulação de base de dados carregando a Pesquisa Distrital por Amostra de Domicílios 2015. A PDAD é uma pesquisa amostral conduzida pela Codeplan a cada dois anos, com representatividade para as 31 Regiões Administrativas, tendo por objetivo traçar as principais características dos domicílios e pessoas destas localidades.
+Vamos iniciar a atividade de manipulação de base de dados carregando a Pesquisa Distrital por Amostra de Domicílios 2018. A PDAD é uma pesquisa amostral conduzida pela Codeplan a cada dois anos, com representatividade para as 31 Regiões Administrativas, tendo por objetivo traçar as principais características dos domicílios e pessoas destas localidades.
 
-Vamos carregar a pesquisa de quatro maneiras diferentes. A PDAD 2015 está disponível, no formato `.csv` no site da Codeplan, neste [endereço](http://www.codeplan.df.gov.br/pdad-2015/). São quatro arquivos: dois deles contendo os microdados, referentes aos domicílios e aos moradores, juntamente de seus respectivos dicionários.
+Vamos carregar a pesquisa de quatro maneiras diferentes. A PDAD 2018 está disponível, no formato `.csv` no site da Codeplan, neste [endereço](http://www.codeplan.df.gov.br/microdados-pdad-2018/). São cinco arquivos: dois deles contendo os microdados, referentes aos domicílios e aos moradores; dois arquivos de dicionário, um em formato `.xlsX` e outro em `.pdf`; e o questionário. 
 
-As bases de dados com microdados usualmente são separadas em tantos arquivos quanto necessário, seguidos sempre de uma documentação que detalha os aspectos técnicos, fornecendo informações para sua manipulação.
+As bases de dados com microdados usualmente são separadas em tantos arquivos quanto necessário, seguidos sempre de uma documentação que detalha os aspectos técnicos, fornecendo informações para sua manipulação. Reserve um tempo para ler esses arquivos e se familiarizar com as questões presentes na pesquisa.
 
 Vamos criar um projeto para fazermos nossas análises. Acesse sua conta no [github](https://github.com/) e crie um novo repositório. Depois disso, vamos criar um novo projeto no RStudio server. Para isso, clique em `File` -> `New project` -> `Version Control` ->`Git`. No campo `Repository URL`, cole a url do projeto que você acabou de criar. 
 
@@ -595,7 +586,7 @@ Agora que o projeto do nosso curso foi criado, vamos carregar os arquivos da PDA
 
 <img src="figuras/carregar.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
 
-Feito isso, vamos agora carregar os dados no R de várias maneiras diferentes.
+Feito isso, vamos agora carregar os dados no R de diferentes médotos.
 
 ## Método point-and-click
 
@@ -608,7 +599,7 @@ Nesta primeira opção, você seleciona o arquivo `.csv` salvo no passo anterior
 Note que, no painel console, o código necessário para carregar a base foi inserido automaticamente. Teste novamente, copiando essa linha de comando e rodando no console.
 
 ```{r}
-pdad_moradores <- read.csv2("~/curso_r/dados/Base-de-Moradores-PDAD.csv", stringsAsFactors=FALSE)
+pdad_moradores <- read.csv2("~/curso_r/dados/pdad_2018_moradores.csv", stringsAsFactors=FALSE)
 ```
 
 Vamos agora testar o segundo método. Novamente, clique em `Import Dataset`, no atalho do painel `Ambiente`, mas agora na opção `From Text(readr)`. Agora, ao invés de informar o arquivo que você baixou, basta informar o link onde ele está hospedado. No nosso caso, é o mesmo endereço em que baixamos os dados da [PDAD 2015](http://www.codeplan.df.gov.br/pdad-2015/). Vamos testar com a [base de moradores](http://www.codeplan.df.gov.br/wp-content/uploads/2018/02/Base-de-Moradores-PDAD.csv).
@@ -656,40 +647,28 @@ pdad_moradores <- data.table::fread("dados/Base-de-Moradores-PDAD.csv",
 # Carregar a base de um link da internet.
 pdad_moradores <- data.table::fread("http://www.codeplan.df.gov.br/wp-content/uploads/2018/02/Base-de-Moradores-PDAD.csv",dec = ",",encoding = "Latin-1")
 ```
-
 Com a função `fread()` é possível carregar a base de ambas as maneiras vistas anteriormente. Note que a função `fread()` detectou o delimitador automaticamente. Informamos apenas que o separador decimal da nossa base é a vírgula, com a opção `dec=","` e que o enconding do arquivo é `enconding=Latin-1`. Essa última opção é importante quando estamos transitando arquivos salvos em diferentes plataformas, principalmente entre Windows e Linux, que possuem formas distintas de tratar caracteres especiais. Agora que você já aprendeu a carregar a base de moradores, pratique carregando também a base de domicílios.
-
 ## Carga pelo banco de dados
-
 A última maneira, que deverá ser sempre sua **primeira opção**, é carregar a base diretamente do banco de dados da Codeplan. Para isso, vamos precisar do pacote `RODBC`, que fará a nossa conexão com o banco de dados. Isso é feito através da função `odbcConnect()`.
-
 ```{r, include=FALSE}
 source("/u02/u36072/banco.R")
 ```
-
 O primeiro argumento desta função é o nome do banco de dados, atribuído no momento da configuração da conexão ODBC. No RServer, o nome atribuído foi `db_codeplan`. Este argumento deve ser fornecido entre aspas. Os próximos argumentos são o nome de usuário e senha. Você deve usar as suas credenciais, fornecidas pelo administrador do banco de dados.
-
 ```{r}
 # Carregar pacote
 library(RODBC)
-
 # Abrir conexão com o banco de dados
 db <- RODBC::odbcConnect("db_codeplan", uid=matricula, pwd=senha)
 ```
-
 ```{r, include=FALSE}
 rm(matricula,senha)
 ```
-
 Pronto! Já estamos conectados ao banco de dados. Para consultar as tabelas disponíveis, utilizamos a função `sqlTables()`. O argumento desta função é o objeto com a conexão que fizemos para o banco de dados.
-
 ```{r}
 # Verificar as tabelas disponíveis no banco de dados
 tabelas <- RODBC::sqlTables(db)
 ```
-
 No objeto `tabelas`, podemos observar todas as tabelas que temos permissão de acesso. Para consultar as tabelas, você pode clicar no objeto carregado ou utilizar a função `View()`, utilizando o nome do objeto como argumento. Para consultar a classe do objeto carregado, utilize a função `class()`, enquanto, para ver os nomes da colunas, utilize as função `names()`. A função `head()` apresenta as primeiras linhas do data.frame, enquanto a função `tails()` apresenta as últimas. Os tipos das colunas podem ser consultados com a função `str()` ou `glimpse()`, do pacote `dplyr`. Finalmente, podemos consultar a quantidade de linhas e a quantidade de colunas carregadas com as funções `nrow()` e `ncol()`, respectivamente.
-
 ```{r}
 #View(tabelas) # Visualizar o objeto tabelas
 class(tabelas) # Verificar a classe do objeto
@@ -701,11 +680,8 @@ dplyr::glimpse(tabelas) # Outra opção para checar as classes
 nrow(tabelas) # Consultar o número de linhas
 ncol(tabelas) # Consultar o número de colunas
 ```
-
 A coluna `TABLE_CAT` informa o banco de origem, `TABLE_SCHEM` informa o esquema da tabela, `TABLE_NAME` o nome da tabela, `TABLE_TYPE` o tipo e `REMARKS` as observações, se houver alguma.
-
 O objeto do tipo `data.frame`, que é o formato do objeto *tabelas*, será o foco da nossa aula. Esse objeto é como se fosse uma matriz, em que as linhas representam as observações e as colunas as variáveis. Como em uma matriz, você pode acessar as linhas e as colunas com o operador `[,]` logo após o nome do objeto. À esquerda, indica-se a posição da linha, enquanto, à direita, indica-se a coluna. Você pode utilizar a posição numérica ou o nome da coluna. Repare que a função `names()` indica, além dos nomes, a posição das colunas. Elas ficam entre colchetes, apresentadas em ordem crescente. Outra maneira para acessar uma variável específica é utilizando o caractere `$` logo após o nome do `data.frame`. Por exemplo, para consultar apenas a coluna com os esquemas, utilize um dos comandos abaixo. 
-
 ```{r}
 tabelas$TABLE_SCHEM # Consultar apenas a coluna "TABLE_SCHEM"
 tabelas[,2] # Outra maneira de consultar a coluna "TABLE_SCHEM"
@@ -716,28 +692,21 @@ tabelas[c(1,7,10:12),c(1,3)] # Selecionar linhar e colunas distintas
 ```
  
 Para fazer uma tabulação simples, de modo a verificar o número de tabelas em cada esquema, utilize a função `table()`.
-
 ```{r}
 table(tabelas$TABLE_SCHEM) # Tabular a coluna
 table(tabelas[,2]) # Tabular a coluna
 table(tabelas[,"TABLE_SCHEM"]) # Tabular a coluna
 ```
-
 Agora vamos aprender a filtrar os dados. Como o nosso foco é na PDAD, focaremos apenas nas tabelas deste esquema. Em outras palavras, queremos olhar apenas as **linhas** do esquema "pdad". Isso pode ser feito da seguinte maneira.
-
 ```{r}
 tabelas[tabelas$TABLE_SCHEM=="pdad",3]
 tabelas[tabelas[,2]=='pdad',]$TABLE_NAME
 ```
-
 Dentro da posição para indicar a linha a ser selecionada, informamos que queremos apenas as linhas em que a coluna `TABLE_SCHEM` é exatamente igual à "pdad". Note que, como se trata de um campo caractere, nós devemos colocar a condição do filtro entre aspas (duplas ou simples).
-
 Com isso, já conseguimos identificar quais são as tabelas que temos interesse em analisar. Vamos refazer todos esses passos, agora de uma maneira muito mais simples e rápida, com o pacote `dplyr`, utilizando os pipes.
-
 ```{r}
 # Carregar o pacote dplyr
 library(dplyr)
-
 # Consultar as tabelas disponíveis
 RODBC::sqlTables(db) %>%
   # Filtrar apenas linhas do esquema PDAD
@@ -745,18 +714,14 @@ RODBC::sqlTables(db) %>%
   # Selecionar apenas a coluna com as tabelas
   dplyr::select(TABLE_NAME)
 ```
-
 Com as funções `filter` e `select`, conseguimos filtrar e selecionar colunas facilmente, de uma maneira rápida e elegante.
-
 Muitas vezes precisamos alterar o nome de uma coluna, seja para tornar seu entendimento mais fácil, seja por questão de conveniência seja por necessidade. Podemos fazer isso de duas maneiras: com a função `colnames()`, do pacote `base`, ou com a função `rename()`, do pacote `dplyr`.
-
 ```{r}
 # Alterar o nome da coluna "TABLE_SCHEM" para Esquema
 colnames(tabelas)[2] <- "Esquema"
 names(tabelas)[2] <- "Esquema"
 # Verificar o resultado
 names(tabelas)
-
 # Alterar o nome com o dplyr
 RODBC::sqlTables(db) %>%
   # Filtrar apenas linhas do esquema PDAD
@@ -768,9 +733,7 @@ RODBC::sqlTables(db) %>%
                 Tipo=TABLE_TYPE,
                 Observações=REMARKS)
 ```
-
 Perceba que foi necessário o conhecimento prévio de que o nome "pdad" estava presente na coluna `TABLE_SCHEM`. O pacote `stringr` conta com uma função para identificar certos argumentos no filtro, baseado em caracteres. Vejamos a função `str_detect()`.
-
 ```{r}
 # Consultar as tabelas disponíveis
 RODBC::sqlTables(db) %>%
@@ -779,61 +742,44 @@ RODBC::sqlTables(db) %>%
   # Selecionar apenas a coluna com as tabelas
   dplyr::select(TABLE_NAME)
 ```
-
-
 Agora que temos o nome das tabelas da PDAD, vamos consultar quais são as colunas existentes, por exemplo, naquela referente às pessoas, do ano de 2015. Para isso, vamos utilizar a função `sqlColumns`, informando a tabela específica no formato [nome do esquema].[nome da tabela].
-
 ```{r}
 # Consultar colunas
 colunas <- RODBC::sqlColumns(db,"pdad.pdad_2015_mor")
 ```
-
 Os nomes das variáveis disponíveis estarão na coluna `COLUMN_NAME`. O objeto carregado possui diversas informações, como o tipo e o tamanho da coluna. Como, neste momento, vamos trabalhar apenas com os nomes das colunas, vamos utilizar o que já aprendemos para visualizar somente esta informação.
-
 ```{r}
 # Consultar as colunas da tabela pdad_2015_mor
 RODBC::sqlColumns(db,"pdad.pdad_2015_mor") %>%
   # Selecionar a coluna "COLUMN_NAME"
   dplyr::select(COLUMN_NAME)
 ```
-
 Feito isso, já estamos pronto para carregar a base de moradores da PDAD no R. Para isso, vamos utilizar a função `sqlQuery`. Dentro dessa função, enviamos uma consulta SQL ao banco de dados, da mesma maneira que fazemos em qualquer outro programa de acesso a BD. A única diferença é que o pacote `RODBC` estará intermediando a comunicação, apresentando os dados quando pertinente. Por exemplo, caso tenhamos permissão para tal, podemos criar, excluir ou alterar tabelas do banco de dados diretamente do R.
-
 Vamos, então, carregar a base de pessoas. A estrutura para realizar uma consulta é bastante simples: dizemos a ação que queremos realizar que, no caso da consulta, é feita com a palavra `select`; informamos as variáveis a serem carregadas, separando-as por vírgulas; dizemos de onde queremos obter esses dados, com a palavra `from`; e informamos o local em que a tabela está armazenada no banco de dados, na estrutura "esquema.tabela", no nosso caso, `pdad.pdad_2015_mor`.
-
 Como consultamos os nomes das tabelas anteriormente, vamos carregar somente as informações sobre a Região Administrativa e o número de moradores no domicílio, para realizarmos um pequeno exercício.
-
 ```{r}
 # Carregar a base de moradores da PDAD 2015
 pdad_moradores <- RODBC::sqlQuery(db,"select A01_DOM_RA,A05_DOM_MORADORES from pdad.pdad_2015_mor")
 ```
-
 Vamos usar o que aprendemos para verificar, de maneira rápida, quantas pessoas foram entrevistadas em cada RA.
-
 ```{r}
 # Tabular a amostra por RA
 table(pdad_moradores$A01_DOM_RA)
 ```
-
 Note que os dados são apresentados com suas codificações. Precisaremos do dicionário de variáveis para entendermos a correspondências entre os códigos e as RAs. Antes de começarmos a realizar estes tratamentos, vamos carregar toda a base da PDAD. Para isso, basta utilizar o caractere `*` na consulta SQL no argumento das variáveis desejadas (todas, neste caso).
-
 ```{r}
 # Carregar a base completa de moradores
 pdad_moradores <- RODBC::sqlQuery(db,"select * from pdad.pdad_2015_mor",
                                   stringsAsFactors=F)
 ```
-
 Para termos o dicionário de dados da base de moradores prontamente acessível dentro do R, vamos carregado utilizando a função `readxl::read_excel()`.
-
 ```{r}
 # Listar os arquivos do diretório dados
 list.files("dados")
 # Carregar as informações do dicionário
 dic_moradores <- readxl::read_excel("dados/Dicionário-Base-Moradores-PDAD-2.xlsx")
 ```
-
 Agora que temos as descrições das variáveis, disponível na coluna `RÓTULO DA VARIÁVEL`, vamos adicionar esses rótulos à base da pdad, com ajuda do pacote `Hmisc`. Esse passo, apesar de dispensável, pode nos ajudar no entendimento do significado das variáveis de maneira rápida, evitando consultas ao dicionário.
-
 ```{r}
 # Carregar o pacote
 library(Hmisc)
@@ -846,9 +792,7 @@ pdad_moradores <- Hmisc::upData(pdad_moradores, labels = var.labels)
 # Verificar o resultado
 Hmisc::describe(pdad_moradores)
 ```
-
 Vamos agora ver como criar uma nova variável, no formato fator, atribuindo *label* (rótulo) aos valores. Faremos isso com as Regiões Administrativas de residência dos respondentes. Isso pode ser feito, dentro do pacote `dplyr`, com as funções `mutate` ou `transmute`. A primeira cria uma nova variável no banco de dados, mantendo todas as demais, enquanto a segunda mantém somente as variáveis que estão sendo criadas dentro da função.
-
 ```{r}
 # Construir uma variável em formato de fator
 RA <- pdad_moradores %>%
@@ -888,25 +832,18 @@ RA <- pdad_moradores %>%
 # Tabular os resultados
 table(RA$RA)
 ```
-
 A função fator possui três argumentos principais: o vetor a ser "fatorizado"", os níveis existentes, i.e., o conjunto de valores únicos existente no vetor, e os rótulos que cada um dos níveis deve receber.
-
 Poderíamos ter feito isso utilizando diretamente o dicionário de variáveis, ajustando as informações pelo R.
-
 ```{r}
 # Filtrar somente as informações da coluna RA
 ra <- dic_moradores[dic_moradores$`NOME DA VARIÁVEL`=="A01_DOM_RA",
                     ]$VALORES
-
 # Separar o vetor de string, baseado no argumento "\n"
 ra <- base::strsplit(ra, "\n")
-
 # Transformar a lista de caracteres em data.frame
 ra <- plyr::ldply(ra, data.frame, stringsAsFactors=F)
-
 # Renomear a coluna de RA
 colnames(ra) <- "RA"
-
 # Realizar os tratamentos finais
 ra <- ra %>%
   # Separar as colunas, baseado no espaço em branco ""
@@ -918,26 +855,18 @@ ra <- ra %>%
   # Criar uma coluna, unindo os valores com um sinal de "="
   tidyr::unite(col = "Arg",c("cod","RA"),sep="=",remove=F) %>%
   dplyr::mutate(RA=gsub("\r","",RA))
-
-
 # Recodificar os nomes
 ra_codificada <- pdad_moradores %>%
   dplyr::transmute(ra=factor(A01_DOM_RA,
                              levels = ra$cod,
                              labels = ra$RA)) %>%
   dplyr::select(ra)
-
 # Tabular os resultados
 table(ra_codificada$ra)
 ```
-
 Apesar de parecer mais complexo, isso evita que tenhamos de copiar, colar ou escrever manualmente o nome de todas as 31 Regiões Administrativas. Se o número de categorias fosse mais elevado, certamente esses passos seriam fundamentais para dar agilidade à tarefa a ser realizada.
-
 Agora que já conseguimos identificar qual foi a amostra em cada uma das RAs, vamos fazer uma gráfico simples, para verificarmos onde obtivemos as maiores amostras. Para isso, vamos usar a o pacote `ggplot`.
-
 O `ggplot` trabalha com data.frames, e não somente com vetores individuais, como é o caso da função `plot`, disponível no pacote `graphics` do R. Uma vantagem do `ggplot` é que você pode adicionar camadas a um gráfico existente de maneira simples e rápida, com o operador `+`. A função `aes()` é utilizada para especificar quais serão os eixos do gráfico, usualmente x e y. Para um tutorial mais completo, acesse [esse site](http://r-statistics.co/Complete-Ggplot2-Tutorial-Part1-With-R-Code.html).
-
-
 ```{r}
 RA %>%
   # Criar a área de plotagem, com o eixo X
@@ -947,9 +876,7 @@ ggplot(aes(x=RA)) +
   # Inverter os eixos
   coord_flip()
 ``` 
-
 Agora vamos organizar essas informações de uma outra maneira, resumindo o total da amostra por Região Administrativa, refazendo o gráfico, para colocá-lo em ordem decrescente de localidade amostrada. Para isso, vamos utilizar o pacote `forcats`.
-
 ```{r}
 # Contar quantas pessoas foram amostradas em cada RA
 RA %>%
@@ -965,40 +892,28 @@ RA %>%
   labs(y="Amostra",
        x="Região Administrativa")
 ```
-
 Agora, a apresentação da informação ficou um pouco mais clara. Com o pacote `ggplot`, é possível alterar praticamente todos os aspectos de um gráfico. Existem alguns pacotes que carregam temas pré-configurados para serem utilizados com o `ggplot`. Vamos testar o pacote `ggthemr`. Basta rodar a função de mesmo nome e todos os gráficos subsequentes serão gerados com o novo tema.
-
 ```{r}
 ggthemr::ggthemr()
 ```
-
 Posteriormente vamos aprender a realizar outras configurações nos gráficos gerados com o `ggplot`.
-
 Agora que já aprendemos a carregar e manipular as bases de dados, tente carregar a base de domicílios, diretamente do banco de dados.
-
 ```{r, include=FALSE}
 # Carregar a base completa de domicílios
 pdad_domicilios <- RODBC::sqlQuery(db,"select * from pdad.pdad_2015_dom",
                                    stringsAsFactors=F)
 ```
-
 ## Aprofundando no tratamento de strings
-
 Manipular string pode ser muito importante em uma pesquisa. Vamos ver como podemos detectar algumas expressões com o pacote `stringr`.
-
 Abaixo você encontra alguns exemplos de operadores ao utilizar strings:
-
 - **'can'**: # reconhece tudo que tenha "can", mas não ignora maiúsculas
 - **'CAN'**: # reconhece tudo que tenha "CAN", mas não ignora minúsculas
 - **'can$'**: # reconhece apenas o que termina exatamente em "can"
 - **'^can'**: # reconhece apenas o que começa exatamente com "can"
 - **'c ?an'**: # reconhece tudo que tenha "can", com ou sem espaço entre o "c" e o "a"
-
-
 ```{r, include=F}
 s <- c('can', 'bacana', 'encanta', 'encanado', 'CANA', 
             'levou o cano')
-
 expressoes <- list(
   'can', # reconhece tudo que tenha "can", mas não ignora case
   'CAN', # reconhece tudo que tenha "CAN", mas não ignora case
@@ -1007,9 +922,7 @@ expressoes <- list(
   'c ?an' # reconhece tudo que tenha "can", com ou sem espaço entre o "c" e o "a"
 )
 ```
-
 Veja como funcionam os testes lógicos.
-
 ```{r, results='asis', echo=FALSE}
 list(strings = s, expressoes = expressoes) %>%
   cross_df() %>%
@@ -1018,53 +931,34 @@ list(strings = s, expressoes = expressoes) %>%
   spread(expressoes, detect) %>%
   pander::pander(caption = "Teste lógicos de strings")
 ```
-
-
 Para se verificar quantas vezes um caractere se repete, dado um determinado padrão, utilizamos os símbolos `+`, `*` e `{x,y}`.
-
 - `ey+` significa `e` e depois `y` "**uma vez** ou mais". Por exemplo, reconhece `hey`, `heyy`, `a eyyy`, mas não reconhece `e`, `y` nem `yy`.
 - `ey*` significa "**nenhuma vez** ou mais". Por exemplo, reconhece `hey`, `heyy`, `a eyyy` e `e`, mas não reconhece `y` nem `yy`.
 - `ey{3}` significa "exatamente três vezes". Por exemplo, reconhece `eyyy` e `eyyyy`, mas não reconhece `eyy`.
 - `ey{1,3}` significa "entre uma e três vezes".
-
 Para aplicar um quantificador a um conjunto de caracteres, usamos os parênteses. Por exemplo, `(ey )+` reconhece `ey ey `.
-
 Colocando caracteres dentro de `[]`, reconhecemos quaisquer caracteres desse conjunto. Por exemplo:
-
 - `[Cc]urso` para reconhecer "curso" em maiúsculo ou minúsculo.
 - `[0-9]` para reconhecer somente números. Para letras: `[a-z]`, `[A-Z]`, `[a-zA-Z]`
 - O símbolo `^` dentro do colchete indica negação. Por exemplo, `[^0-9]` significa todos os caracteres, exceto números.
 - O símbolo `.` fora do colchete indica "qualquer caractere". Dentro do colchete é apenas um caractere
 - Com `[[:space:]]` reconhecemos espaços, com `[[:blank:]]` reconhecemos espaços em branco e tabulações, com `[[:lower:]]` reconhecemos minúsculas, com `[[:upper:]]` reconhecemos minúsculas e com `[[:punct:]]+` reconhecemos pontuações.
-
 # Manipulação da PDAD 2015
-
 A PDAD 2015 foi uma pesquisa amostral, que selecionou domicílios, divididos em estratos de regiões. A imagem abaixo ilustra essa situação (imagem extraída do site  [mathcaptain.com](http://www.mathcaptain.com/statistics/stratified-sampling.html))   
-
 <img src="http://image.mathcaptain.com/cms/images/113/stratified-sampling.png" style="width: 400px;display: block;margin-left: auto;margin-right: auto "/>
-
 Sendo assim, suas estimativas estão sujeitas a um erro amostral, o que torna necessária a consideração de seu desenho amostral no momento do cálculo das estimativas. É com essas informações que construímos intervalos de confiança para as estimativas. De maneira simples, queremos fornecer, com algum grau de confiança, qual o verdadeiro valor populacional dada a amostra coletada.
-
 Nesta aula iremos aprender a declarar o plano amostral da PDAD 2015 no R, utilizando o pacote `survey`. Vamos utilizar também o pacote `srvyr`, que roda o pacote `survey` sob a lógica do pacote `dplyr`.
-
 ## Declarar o plano amostral da PDAD 2015
-
 Antes de declararmos o plano amostral da PDAD 2015, vamos trabalhar com a união das bases de moradores e domicílios. Muitas vezes precisamos cruzar as características de moradia com aquelas pessoais. Por exemplo, se quisermos saber os anos de estudo médio dos responsáveis por domicílios sem esgotamento sanitário adequado, precisamos utilizar as duas bases de dados simultaneamente.
-
 Para realizar este trabalho, vamos utilizar a função `left_join()` do pacote `dplyr`. A junção de bases pode ser feita sob várias perspectivas. Veja a figura abaixo (extraída [desse site](https://twitter.com/yutannihilation/status/551572539697143808)).
-
 <img src="figuras/join.png" style="width: 400px;display: block;margin-left: auto;margin-right: auto "/>
-
 Conforme apresentado no diagrama de *Venn*, temos junções à esquerda, à direita, intersecções e complementares de conjuntos. De maneira simples, a nossa intenção é relacionar conjuntos baseado em uma característica comum entre eles -- a chave de ligação. No caso da PDAD, o código que identifica cada domicílios é dado pela coluna `CD_SEQ_DOM`. Essa é uma chave única na base de domicílios, sendo repetida conforme o número de moradores na base de pessoas.
-
 ```{r}
 # Consultar o índice das colunas de mesmo nome entre as bases
 x <-
 which((names(pdad_domicilios) %in% names(pdad_moradores)))
-
 # Verificar quais são as colunas
 names(pdad_domicilios)[x]
-
 # Fazer o join das bases
 pdad <- pdad_moradores %>%
   # Entrar com a função para left join
@@ -1075,11 +969,8 @@ pdad <- pdad_moradores %>%
                        A05_DOM_MORADORES,NFATOR_RA,PESO_PRE,POPULACAO_AJUSTADA,
                        ESTRATO)))
 ```
-
 Consulte o número de linhas e colunas da base criada. Repare que o número de linhas permaneceu o mesmo da base posicionada à esquerda, i.e., base de moradores. Como não havia nenhuma repetição na base de domicílios, o resultado já era esperado. Experimente rodar o código novamente, agora substituindo a função `left_join` por `right_join` e perceba que o resultado é exatamente o mesmo. Esse é um cuidado que se deve ter quando o desejo é ligar duas bases. Caso as chaves de ligação tivessem múltiplos casos, a função iria realizar as combinações pertinentes, o que, geralmente, causa um grande aumento no tamanho da base.
-
 Note que a função retornou um aviso no console, com a seguinte mensagem: `Joining, by = "CD_SEQ_DOM"`. Por padrão, a função de `left_join()` usa como argumento as colunas de mesmo nome. Caso as chaves de ligação tenham nomes distintos em cada base, podemos informar na função da seguinte maneira.
-
 ```{r}
 # Fazer o join das bases
 pdad <- pdad_moradores %>%
@@ -1093,23 +984,17 @@ pdad <- pdad_moradores %>%
                        ESTRATO)),
 by=c("CD_SEQ_DOM"="CD_SEQ_DOM"))
 ```
-
 O resultado é exatamente o mesmo, mas o aviso de junção é inibido, uma vez que informamos a condição desejada. Se houvesse mais de uma condição, basta adicioná-las à direita (e.g. `by=c("CD_SEQ_DOM"="CD_SEQ_DOM","A01_DOM_RA"="A01_DOM_RA")`). Como exercício, rode novamente o `left_join()` de duas maneiras: sem filtrar as colunas repetidas; e fornecendo apenas duas condições de igualdade, também sem filtrar colunas repetidas. Compare os resultados obtidos e note que todas as condições repetidas foram utilizadas no primeiro caso, enquanto no segundo caso novas colunas foram adicionadas à base.
-
 Vamos agora declarar o plano amostral da PDAD 2015. Para isso, vamos precisar de algumas informações básicas: 
-
 + A probabilidade de um domicílio ter sido sorteado em um determinado estrato: `PESO_PRE`;
 + O estrato em que isso ocorreu: `ESTRATO`;
 + A população total do estrato, ajustada para a data de referência da pesquisa para a pós-estratificação: `POPULACAO_AJUSTADA`;
 + O código único de identificação da unidade de amostragem: `CD_SEQ_DOM`.
-
 O primeiro passo é criarmos o desenho inicial da pesquisa.
-
 ```{r}
 # Carregar os pacotes necessários
 library(survey)
 library(srvyr)
-
 # Declarar o desenho incial
 sample.pdad <-  
   # Declarar a base a ser utilizada
@@ -1120,36 +1005,27 @@ sample.pdad <-
     weights = PESO_PRE, # Probabilidade da unidade ser sorteada
     nest=TRUE # Parâmetro de tratamento para dos IDs dos estratos
   )
-
 # Criar um objeto para pós estrato
 post.pop <- unique(subset(pdad,select=c(POPULACAO_AJUSTADA)))
-
 # Criar a variável de frequência (a mesma variável de pós-estrato, para funcionar como id e peso)
 post.pop$Freq <- post.pop$POPULACAO_AJUSTADA
-
 # Outra maneira de criar o mesmo objeto
 post.pop <- pdad %>%
   dplyr::select(POPULACAO_AJUSTADA) %>%
   dplyr::distinct() %>%
   dplyr::mutate(Freq=POPULACAO_AJUSTADA)
-
 # Declarar o objeto de pós-estrato
 sample.pdad <- survey::postStratify(sample.pdad,~POPULACAO_AJUSTADA,post.pop)
-
 # Criar objeto para calcular os erros por bootstrap (Rao and Wu’s(n − 1) bootstrap)
 # J. N. K. Rao and C. F. J. Wu - Journal of the American Statistical Association
 # Vol. 83, No. 401 (Mar., 1988), pp. 231-241
 amostra <- survey::as.svrepdesign(sample.pdad, type = "subbootstrap")
-
 # Ajustar estratos com apenas uma UPA (adjust=centered)
 options( survey.lonely.psu = "adjust")
-
 # Ajustar objeto de amostra, para uso com o pacote srvyr
 amostra <- srvyr::as_survey(amostra)
 ```
-
 Pronto! Já temos o objeto com as informações da PDAD que iremos trabalhar no restante desta aula. Vamos testar estimando o total de possas com 18 anos ou mais de idade no Distrito Federal. O nosso objeto base agora será o `amostra`, com o qual utilizaremos o pacote `srvyr`. Com a parâmetro `vartype='ci'`, obtemos as estimativas dos intervalos de confiança. 
-
 ```{r}
 # População DF com mais de 18 anos
 pop18 <- data.frame(
@@ -1161,9 +1037,7 @@ amostra %>%
   # Calcular o total da população, com seu intervalo de confiança
   srvyr::summarise(n=survey_total(count, vartype = "ci")))
 ```
-
 Verificamos que existiam entre `r pop18[1,2]` e  `r pop18[1,3]` pessoas com mais de 18 anos no DF em 2015, sendo o valor médio de `r pop18[1,1]` pessoas. Caso o desejo fosse estimar esse mesmo total por sexo, isso poderia ser feito com a função `group_by()`. Vamos aproveitar e calcular o percentual de cada grupo no total.
-
 ```{r}
 amostra %>%
   # Filtrar somente a população com 18 anos ou mais de idade, retirando os códigos de não informação
@@ -1176,15 +1050,10 @@ amostra %>%
                    # Calcular o percentual da população
                    pct=survey_mean(vartype = "ci"))
 ```
-
 Note que, desta vez, não foi preciso criar um contador. Quando utilizamos a função de agrupamento seguida da função de sumarização, os totais e percentuais são calculados sem a necessidade de informar o argumento.
-
 ## Trabalhando com datas
-
 Vez ou outra nos deparamos com base de dados com variáveis do tipo data. Dentro da família `tidyverse`, temos o pacote `lubridate`, que facilita muito a manipulação deste tipo de dados. Se tivermos uma base de dados, por exemplo, com a data de nascimento das pessoas, é interessante podermos calcular a idade de maneira rápida e eficiente. Na PDAD 2015, a informação da data de nascimento não foi coleta. Vamos, então, trabalhar com a data da pesquisa, disponível na variável `DT_DATA_PESQUISA`.
-
 Vamos iniciar a análise verificando como o campo de data está preenchido, contando o número de caracteres do campo data.
-
 ```{r}
 # Utilizar a base de domicílios
 pdad_domicilios %>%
@@ -1195,9 +1064,7 @@ pdad_domicilios %>%
   # Contar a quantidade de caracteres
   dplyr::count(n_char) 
 ```
-
 Verifica-se quem, aparentemente, a variável está padronizada. Vamos, então, criar uma variável com o ano da pesquisa e verificar o total amostrado em cada ano, por Região Administrativa.
-
 ```{r}
 # Utilizar a base de domicílios
 pdad_domicilios %>%
@@ -1208,9 +1075,7 @@ pdad_domicilios %>%
   # Contar a quantidade de caracteres
   dplyr::count(A01_DOM_RA,ano_pesquisa) 
 ```
-
 O que deu errado? Tabule os dados de data e verifique que, apesar de todas as observações contarem com 10 caracteres, nem todas as datas estão padronizadas. Existem espaços em branco que completam o campo de string para que ele fique com 10 caracteres. Vamos corrigir isso, usando a função `stringr::str_trim()`.
-
 ```{r}
 # Utilizar a base de domicílios
 pdad_domicilios %>%
@@ -1221,9 +1086,7 @@ pdad_domicilios %>%
   # Contar a quantidade de caracteres
   dplyr::count(n_char) 
 ```
-
 Verifique que, agora, identificamos que existem quatro padrões de preenchimento do campo data: vazio, oito, nove ou dez caracteres. Vamos corrigir esses dados usando duas abordagem: uma mais longa, para exercitarmos o trabalho com strings, e outra mais rápida.
-
 ```{r}
 # Amrzenar resultado no objeto x
 x<-
@@ -1245,11 +1108,8 @@ pdad_domicilios %>%
                 DATA_AJUSTADA=paste(DD,MM,AAAA,sep = "/"),
                 ANO=stringr::str_sub(DATA_AJUSTADA,7,10))
 ```
-
 Uma das funções recorrentemente utilizada é a `case_when()`. Sua lógica é muito parecida com a função `SE` do excel e `case when` do SQL. Primeiro fazemos um teste lógico e, logo em seguida, utilizamos o símbolo `~` para indicar o que desejamos que aconteça caso a condição seja satisfeita. A próxima condição é separada por uma vígula e segue a mesma lógica. A última condição pode ser determinada com a palavra `TRUE`, seguida do argumento de atribuição `~` e a condição desejada. Uma função muito parecida, do pacote `base`, é a `ifelse()`, que é estruturada com `teste lógico,valor verdadeiro,valor falso`. A desvantagem desta função é que, a cada nova condição, devemos criar abrir novamente a função `ifelse()`. 
-
 Agora as informações estão no formato desejado. Mas foram necessários muitos passos que, apesar de ilustrarem diversas importantes funções, levam um tempo de programação. Vamos refazer esse exercício de outra maneira.
-
 ```{r}
 # Utilizar a base de domicílios
 pdad_domicilios %>%
@@ -1260,9 +1120,7 @@ pdad_domicilios %>%
                 # Extrair o valor do ano
                 ANO=lubridate::year(DATA_CORRIGIDA))
 ```
-
 Muito mais rápido, elegante e eficiente. A variável criada é da classe "date", com a qual você pode fazer operações que demandem este formato. Vamos, então, checar a amostra em cada ano, por RA.
-
 ```{r}
 # Utilizar a base de domicílios
 pdad_domicilios %>%
@@ -1275,9 +1133,7 @@ pdad_domicilios %>%
   # Verificar o total de obsevações por ano
   dplyr::count(A01_DOM_RA,ANO)
 ```
-
 Perceba que, com esse exercício, verificamos que existem algumas informações com problema de preenchimento. Vamos gerar um arquivo com as inconsistências, por RA.
-
 ```{r, include=FALSE}
 pdad_domicilios <- pdad_domicilios %>%
   dplyr::mutate(RA=factor(A01_DOM_RA,
@@ -1314,7 +1170,6 @@ pdad_domicilios <- pdad_domicilios %>%
                                      'Vicente Pires',
                                      'Fercal')))
 ```
-
 ```{r}
 inconsistencia <-
 # Utilizar a base de domicílios
@@ -1330,44 +1185,30 @@ pdad_domicilios %>%
   # Organizar os resultados por ordem crescente de RA e Data
   dplyr::arrange(RA,CD_SEQ_DOM)
 ```
-
 ### Gravar uma tabela no formato ".csv"
-
 Agora que geramos a tabela com as inconsistências, vamos salvar os resultados em um arquivo `.csv`. Para isso, vamos utilizar a função `write.table()`, do pacote `utils`. Com a função, informe o objeto que você quer gerar o arquivo no primeiro argumento e o nome do arquivo a ser gerado. O arquivo será salvo no seu diretório de trabalho, por padrão. Caso você queria salvá-lo em outro local, basta informar o caminho desejado antes do nome do arquivo (e.g. `/u02/u36072/`, para salvar na minha pasta do servidor).
-
 Assim como as colunas possuem nomes, as linhas também podem ser nomeadas no R. Quando não damos um nome específico para as linhas, elas são, por padrão, nomeadas com números inteiros sequenciais, de 1 até o número de linhas da tabela. Consulte essa informação com a função `row.names()`.
-
 Como não queremos que essas informações apareçam na nossa tabela, utilizamos o argumento `row.names = F` no momento de escrevermos a tabela. Além disso, o arquivo será gerado, por padrão, delimitado por espaços. Vamos alterar o delimitador para ponto e vírgula `;`. Poderíamos escolher qualquer outro delimitador desejado.
-
 ```{r }
 write.table(inconsistencia,"inconsistencia.csv",
             row.names = F, sep = ";")
 ```
-
 Vamos verificar o resultado localmente. Exporte a tabela gerada, selecionando o arquivo gerado no painel de arquivos, clicando em `More` -> `Export`. Abra o arquivo e consulte as informações geradas.
-
 <img src="figuras/export.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
-
 Note que, ao abrir no Windows, tivemos um problema com a codificação dos acentos. Vamos corrigir isso com o argumento `fileEncoding` na função `write.table()`. Vamos aproveitar para mudar os dados ausentes de `NA` para vazio.
-
 ```{r }
 write.table(inconsistencia,"inconsistencia.csv",
             row.names = F, sep = ";",
             fileEncoding = "Latin1",
             na = "")
 ```
-
 Agora o problema dos acentos foram corrigidos. Com isso, podemos compartilhar a informação com usuários do excel ou qualquer outro software que faça leitura deste tipo de arquivo.
-
 ## Operações com datas
-
 Vamos agora aprender a manipular as datas, fazendo operações de intervalos de tempo.
-
 ```{r}
 library(lubridate)
 # Criar um objeto com a data de referência da pesquisa
 ref <- dmy("15-07-2015")
-
 # Armazenar o resultado em um objeto
 referencias <- 
 # Utilizar a base de domicílios
@@ -1383,9 +1224,7 @@ pdad_domicilios %>%
   # Filtrar as datas problemáticas
   dplyr::filter(year(DATA_CORRIGIDA) %in% c(2015,2016))
 ```
-
 Vamos aproveitar para fazer um gráfico de densidade com essas informação.
-
 ```{r}
 # Utilizar a base de referências
 referencias %>%
@@ -1398,19 +1237,13 @@ ggplot(aes(x=dif_data_dia)) +
   # Nomear os eixos
   labs(y="Densidade",x="Diferença de dias da pesquisa")
 ```
-
 Assim, percebemos que houve duas grandes concentrações de entrevistas: aquelas realizadas antes do mês de referência; e aquelas realizadas cerca de um ano depois.
-
 ## Outras manipulações recorrentes
-
 Vamos agora elencar uma série de variáveis para construirmos um pequeno relatório. Vamos construir gráficos e tabelas para: população, por faixa etária e sexo; distribuição do rendimento do trabalho, por faixas; e tipo de esgotamento sanitário do domicílio. E montar um mini relatório com essas informações.
-
 As informações serão criadas com a função `mutate()`, as faixas de idade e de rendimento serão criadas com auxílio da função `cut()`. Ao final, utilizaremos a função `mutate_if()` para transformar as variáveis do tipo caractere em fator e, por fim, utilizaremos a função `select()` para selecionar as variáveis desejadas. Para criar as faixas de rendimento, consideraremos o número de salários mínimos, vigentes em 2015.
-
 ```{r}
 # Criar um objeto com o salário mínimo
 sm <- 788
-
 # Criar um objeto com as variáveis de interesse
 x <- amostra %>%
   # Criar variável de sexo
@@ -1436,7 +1269,6 @@ x <- amostra %>%
                                  ordered_result = T),
                 # Criar variável de faixas de salário
                 faixas_salario=cut(case_when(E14_MOR_PRINC_REND_BRUTO %in% c(77777,88888,99999)~NA_real_,
-
                                          TRUE~as.numeric(E14_MOR_PRINC_REND_BRUTO)),
                                    breaks = c(-Inf,sm,2*sm,4*sm,10*sm,Inf),
                                    labels = c("Até 1 salário","Mais de 1 até 2 salários",
@@ -1482,9 +1314,7 @@ x <- amostra %>%
   # Selecionar as variáveis criadas e algumas variáveis auxiliares
   srvyr::select(RA,D03_MOR_CONDICAO_UNID,D06_MOR_IDADE,E08_MOR_ATIVIDADE,sexo,esgotamento,idade_faixas,faixas_salario)
 ```
-
 Criada a base com as variáveis, vamos calcular os totais para cada um dos grupos, juntamente com seus intervalos de confiança. Para isso, vamos utilizar as funções `group_by()`, para conseguirmos agrupar os dados pelas categorias desejadas e a função `summarise()`, que calculará os totais ou proporções para cada grupo. Os intervalos de confiança são calculados com a função `vartype="ci"`. Note que, como existem idades sem resposta, com o código `999`, precisamos retirá-las com a função `filter()`.
-
 ```{r}
 # Construir um objeto com as idades calculadas, por faixas de idade e sexo
 piramide <-
@@ -1495,7 +1325,6 @@ x %>%
   srvyr::group_by(idade_faixas,sexo) %>%
   # Calcular os totais
   srvyr::summarise(n=survey_total(na.rm = T, vartype = "ci"))
-
 # Fazer o gráfico com a pirâmide
 piramide_grafico <-
 piramide %>%
@@ -1533,15 +1362,11 @@ piramide %>%
   labs(x="",y="") +
   # Suprimir o nome da legenda
   scale_fill_discrete(name = "")
-
 # Plotar gráfico
 piramide_grafico
 ```
-
 Para montar a pirâmide, usamos duas vezes a função `geom_bar()`, uma para desenhar a distribuição etária feminina e outra a masculina. Como o formato desejado é a pirâmide, escolhemos uma das categorias e negativamos seus valores, para que ela seja apresentada na direção oposta da abscissa. O mesmo procedimento deve ser adotado para as informações dos erros amostrais, desenhados com a função `geom_errorbar()`. Para que as informações sejam apresentadas em barras horizontais, ao invés de vertical, usamos a função `coord_flip()`, que inverte as coordenadas do gráfico. Por fim, realizamos alguns ajustes de apresentação das informações, retirando os nomes dos eixos com a função `labs()`, com a função `scale_fill_discrete()` para retirar o nome da legenda e a função `scale_y_continuos()` para alterar a formatação numérica dos *labels*. Note que, para isso, criamos uma função com uma série de argumentos de formação: valor absoluto `abs()`, retiramos a notação científica, alteramos a forma de exibição do separador decimal e acrescentamos um separador de milhar por ponto.
-
 Para construir o gráfico com os salários, os passos são análogos aos realizados para construção do gráfico anterior. A única diferença é que agora utilizamos a função `theme()` para retirar a legenda da apresentação dos dados.
-
 ```{r}
 # Construir um objeto com as informações de salario
 salario <- x %>%
@@ -1551,7 +1376,6 @@ salario <- x %>%
   srvyr::group_by(faixas_salario) %>%
   # Calcular os totais para cada grupo de salário
   srvyr::summarise(n=survey_total(na.rm=T,vartype = "ci"))
-
 # Construir um objeto com o gráfico
 salario_grafico <-
 salario %>%
@@ -1572,18 +1396,13 @@ salario %>%
                                                  big.mark = ".",
                                                  scientific = FALSE,
                                                  decimal.mark=","))
-
 # Plotar gráfico
 salario_grafico
 ```
-
-
 Caso o desejo fosse saber a situação de salarios por RA, poderíamos fazer isso facilmente com a função `facet_wrap()`. Vamos ver como funciona, agora calculando o percentual de cada faixa de rendimento, em cada uma das 31 RAs.
-
 ```{r, fig.height=12, fig.width=8}
 # Carregar o pacote Scales
 library(scales)
-
 # Construir o objeto com os valores
 salario2 <- x %>%
   # Retirar pessoas sem atividade
@@ -1592,7 +1411,6 @@ salario2 <- x %>%
   srvyr::group_by(RA,faixas_salario) %>%
   # Calcular as proporções por faixa de salário
   srvyr::summarise(n=survey_mean(na.rm=T,vartype = "ci"))
-
 # Construir o gráfico
 salario2 %>%
   # Plotar os eixos x e y
@@ -1612,27 +1430,21 @@ salario2 %>%
   # Plotar o gráfico para cada uma das RAs, divididas em 4 colunas
   facet_wrap(.~RA, ncol=4)
 ```
-
 Muitas vezes, precisamos atualizar valores para termos noção do poder de compra em uma determinada data, ou para compatibilizar valores coletados em períodos de tempo distintos. Um dos índices de preços mais utilizados para fazer esse tipo de correção é o Índice de Preços do Consumidor Amplo -- IPCA -- calculado pelo IBGE. Vamos atualizar os salários para os preços da referência mais atual, utilizando as informações existentes no banco de dados.
-
 ```{r}
 # Consultar as tabelas do esquema inflação
 RODBC::sqlTables(db) %>%
   dplyr::filter(str_detect(TABLE_SCHEM,"inflacao"))
-
 # Consular as colunas da tabela do IPCA mensal
 RODBC::sqlColumns(db,"inflacao.ipca_mensal")$COLUMN_NAME
-
 # Puxar as colunas desejadas
 inflacao_df <- RODBC::sqlQuery(db,"select referencia,codigo,descricao,distritofederal from inflacao.ipca_mensal where codigo=0",stringsAsFactors=F) %>%
   # Ajustar a variável de data
   dplyr::mutate(referencia=lubridate::ymd_hms(referencia)) %>%
   # Filtrar datas superiores ao período de referência da PDAD 2015
   dplyr::filter(referencia>"2015-07-01")
-
 # Calcular a inflação acumulada
 inflacao_acum <- prod(inflacao_df$distritofederal/100+1)
-
 # Calcular o salário médio nominal e ajustado da PDAD 2015
 amostra %>%
   # Retirar pessoas sem atividade
@@ -1646,11 +1458,8 @@ amostra %>%
   srvyr::summarise(salario_nominal=survey_mean(salario_nominal, na.rm=T,vartype = "ci"),
                    salario_real=survey_mean(salario_real, na.rm=T,vartype = "ci"))
 ```
-
 Repare que utilizamos a função `survey_mean()` para calcular a média de uma variável contínua desta vez.
-
 Vamos aproveitar a base do IPCA para aprendermos uma manipulação muito importante de bases de dados. Para fazer gráficos, o formato `long` é muito útil, enquanto o formato `wide` torna a visualização no formato tabela ou operações em colunas mais simples. Vamos treinar estes conceitos carregando a inflação, dos últimos 12 meses, do DF, do Brasil, de São Paulo e do Rio de Janeiro.
-
 ```{r}
 inflacao <- RODBC::sqlQuery(db,"select referencia,descricao,distritofederal,riodejaneiro,saopaulo,brasil from inflacao.ipca_acum12m where codigo=0",stringsAsFactors=F) %>%
   # Ajustar a variável de data
@@ -1658,9 +1467,7 @@ inflacao <- RODBC::sqlQuery(db,"select referencia,descricao,distritofederal,riod
   # Filtrar datas superiores ao período de referência da PDAD 2015
   dplyr::filter(referencia>"2017-06-01")
 ```
-
 Esse formato, em que temos cada coluna um caso, é o chamado formato `wide`. Caso a necessidade fosse fazer um gráfico da evolução da inflação em cada localidade, seria necessário construir uma geometria para cada caso. Vamos transformar esses dados para o formato `long`, em qua cada linha será um caso, utilizando o pacote `tidyr`.
-
 ```{r}
 inflacao_long <-
 inflacao %>%
@@ -1669,18 +1476,14 @@ inflacao %>%
   # "Inflação"
   tidyr::gather("Local","Inflação",c(3:6))
 ```
-
 A função `gather()` "junta" os valores para colocar cada caso em uma linha. Vamos fazer agora o caminho inverso, voltando para o formato `wide` com a função `spread`.
-
 ```{r}
 inflacao<-
 # Retornar do formado long para o formato wide
 inflacao_long %>%
   tidyr::spread(Local,`Inflação`)
 ```
-
 O primeiro argumento é a variável chave, que irá assumir o papel de coluna, enquanto o segundo argumento é a variável dos valores, que irá popular estas colunas. Vamos contruir o gráfico da inflação destas localidades, utilizando o formato `long`.
-
 ```{r}
 inflacao %>%
   # Passar as colunas de cada localidade para o formato long, sendo
@@ -1711,9 +1514,7 @@ inflacao %>%
   # Alterar a posição da legenda
   theme(legend.position = "bottom")
 ```
-
 Para o último gráfico, como estamos realizando uma estatística para o domicílio, precisamos filtrar para selecionarmos apenas uma informação. Fazemos isso pegando a linha referente apenas ao responsável, com auxílio da função `filter()`. Como maneira de facilitar a leitura dos dados, adicionamos os valores exatos de cada coluna com a função `geom_text()`
-
 ```{r}
 # Construir o objeto com o esgotamento sanitário
 esgotamento <- x %>%
@@ -1723,7 +1524,6 @@ esgotamento <- x %>%
   srvyr::group_by(esgotamento) %>%
   # Calcular a proporção de cada grupo
   srvyr::summarise(n=survey_mean(na.rm = T,vartype = "ci"))
-
 # Construir o objeto com o gráfico
 esgotamento_grafico <-
 esgotamento %>%
@@ -1744,17 +1544,13 @@ esgotamento %>%
   geom_text(aes(label = paste0(round(100*n,0),"%")),
                 size=3, fontface = "bold", 
                 vjust = -0.25,hjust=1.25)
-
 # Plotar grafico
 esgotamento_grafico
 ``` 
-
 Vamos ver como fazer um gráfico de pizza, com as mesmas informações anteriores. Note que, para fazer esse tipo de gráfico, perderemos as informações dos intervalos de confiança. Para que o gráfico fique mais elegante, criamos um tema retirando todos os elementos básicos, atribuindo-o a um objeto chamado `tema_branco`. Para esse tipo de gráfico, precisamos da função `coord_polar()`, para colocar o gráfico em coordenada polar. Com isso, o posicionamento dos rótulos ficam um pouco mais complexos, sendo necessário criar uma variável com a posição do *label*.
-
 ```{r}
 # Carregar o pacote ggrepel
 library(ggrepel)
-
 # Construir o objeto com as informações de esgotamento sanitário
 esgotamento2 <- x %>%
   # Filtar para o responsável
@@ -1767,7 +1563,6 @@ esgotamento2 <- x %>%
   dplyr::arrange(-n) %>%
   # Construir uma variável auxiliar, com a posição do label
   dplyr::mutate(pos=cumsum(n)-n/8)
-
 # Criar o tema branco, eliminando todos os elementos gráficos padrões
 tema_branco <- theme_minimal()+
   theme(
@@ -1785,7 +1580,6 @@ tema_branco <- theme_minimal()+
     panel.grid=element_blank(),
     # Retirar os ticks
     axis.ticks = element_blank())
-
 # Construir o gráfico de pizza
 esgotamento2 %>%
   # Plotar o gráfico, com as quantidades no eixo y, o preenchimento com as categorias,
@@ -1806,11 +1600,8 @@ esgotamento2 %>%
   geom_text_repel(aes(label = percent(n), y=pos), size=5, color="white",
                   fontface="bold")
 ```
-
 # Criando relatórios com o Rmarkdown
-
 Agora que fizemos todos estes objetos contendo nossos gráficos, vamos criar um pequeno relatório com estas informações. Para isso, vamos precisar salvar nossos objetos, para que não seja necessário criarmos todos eles novamente. Basicamente, nos podemos salvar os objetos do R em alguns vários, como o `Rdata` e o `rds`, ou em formatos utilizados por outros pacotes estatísticos, com o pacote `foreign`. Uma maneira rápida de salvar todos os seus objetos disponíveis no ambiente em um único arquivo é utilizando a função `save.image()`. Utilize a opção `compress = T` para reduzir o tamanho do arquivo a ser criado.
-
 ```{r}
 # Salvar um arquivo com todos os objetos
 save.image("objetos", compress = T)
@@ -1819,57 +1610,35 @@ rm(list = ls())
 # Carregar os objetos salvos
 load("objetos")
 ```
-
 Muitas vezes não precisamos salvar todo o nosso diretório e queremos apenas salvar um objeto específico, com o banco de dados ou o objeto que iremos utilizar no nosso relatório. Para isso, utilizamos a função `saveRDS()`. Vamos salvar os três gráficos que criamos anteriormente, neste formato.
-
 ```{r}
 # Salvar os objetos no formato RDS
 saveRDS(piramide,"piramide")
 saveRDS(esgotamento,"esgotamento")
 saveRDS(salario,"salario")
 ```
-
 Feito isso, agora vamos criar nosso relatório. Para isso, abra um novo arquivo R markdown, clicando no atalho para novo arquivo -> `R Markdown`. Selecione a opção PDF, escolha um nome para o arquivo e clique em ok.
-
 <img src="figuras/markdown.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
-
 Os arquivos gerados no R são baseados na linguagem $\LaTeX$. Assim, é possível adicionar os pacotes e definições utilizados no $\LaTeX$ diretamente no R. Os relatório básicos já estão pré-configurados no R, sem que sejam necessários maiores ajustes.
-
 Assim que criamos um novo arquivo, um modelo de relatório é automaticamente gerado A estrutura básica é composta por um preâmbulo, no qual inserimos a algumas informações sobre a estrutura e a configuração do markdown. Este preâmbulo fica encapsulado entre três traços `---`, nos quais indicamos uma série de formatações, inclusive o tipo do *output* que será gerado, que é o PDF no nosso caso. Podemos gerar ainda documentos em word ou html. Este curso, por exemplo, foi escrito em um arquivo `markdown`, tendo como *output* o formato `HTML`.
-
 Os códigos de R podem ser inseridos juntamente com os textos, dentro de acentos graves ` `` `, com a primeira letra sendo o `r`. Podemos criar também os **chunks**, que são estruturas separadas do R para inserções no texto, como tabelas e figuras. Os **chunks** são encapsulados por uma sequência de três acentos graves`  ``` `, sendo a parte superior composta ainda de parâmetros inseridos entre chaves `{r}`, iniciando com a letra r.
-
 ```{r}
 # `r rnow(pdad_moradores)` Isto é um código r dentro de um texto markdown
-
 # Abaixo temos um exemplo de chunk
-
 #```{r}
 # table(pdad_moradores$A01_DOM_RA)
 #```
-
 ```
-
 Os títulos das seções são criados com o símbolo `#`. Caso queiramos criar subseções, vamos adicionando as sequências dos mesmos símbolos.
-
 Após ser escrito o relatório, precisamos compilar o documento, que é realizado com o auxílio dos pacotes `knit` e `pandoc`. O primeiro deles cria um arquivo com os elementos textuais e do R, no formato `.md`, que posteriormente é convertido para o formato desejado com o pacote segundo.
-
 <img src="https://d33wubrfki0l68.cloudfront.net/61d189fd9cdf955058415d3e1b28dd60e1bd7c9b/9791d/images/rmarkdownflow.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
-
 Rode o arquivo de exemplo, clicando no botão `knit`, para verificar o resultado. O RStudio pedirá para você indicar o nome e o local do arquivo a ser criado. Toda vez que você "tricotar" o documento, o R salva e executa todos os passos elencados anteriormente automaticamente. 
-
 <img src="figuras/tricote.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
-
 Vamos agora criar o nosso relatório. Para isso, vamos utilizar apenas dois pacotes do $\LaTeX$, o `babel`, para conseguirmos produzir o relatório em português, e o pacote `inputenc`, que cuidará do encoding dos caracteres. Fazemos isso adicionando no preâmbulo do documento a linha `header-includes:`, indicando os pacotes do $\LaTeX$ a serem utilizados. Qualquer outro pacote pode ser inserido neste espaço.
-
 Comumente, utilizamos o primeiro *chunk* para inserir as configurações e opções a serem utilizadas no decorrer do documento. Note que utilizamos a opção `include=FALSE` para que este *chunk* não seja incluído no documento. Nele, carregamos os pacotes necessários, ajustamos as configurações padrão dos demais *chunks*, carregamos a base e ajustamos uma configuração do pacote `xtable`, que será utilizado para gerar nossas tabelas no formato $\LaTeX$. 
-
 No meio do documento, podemos utilizar qualquer comando $\LaTeX$, da mesma maneira que faríamos, caso estivéssemos trabalhando com a ferramenta. Alguns atalhos facilitam uma série de formatações, como palavras em itálico, escritas entre asteriscos `*palavra*` e negrito, escritas entre duplos asteriscos `**palavra**`. Notas de rodapé são facilmente inseridas entre colchetes, precedido de um acento circunflexo `^[nota de rodapé]`. 
-
 Para inserirmos uma figura criada com o pacote `ggplot`, devemos "abrir" um *chunk* e chamar o objeto dentro dele. Para inserir o título da figura e seu respectivo label, utilizamos a opção `fig.cap="Título"`, no incício do *chunk*. O *label* deve ser adicionado por dentro do título, com o comando `\\label{}`, este último derivado do $\LaTeX$. Repare que, neste caso, foi necessário inserir uma segunda barra invertida, de modo que o R entenda que estamos querendo utilizar um comando do $\LaTeX$ dentro do *chunk*. Para fazer referência ao elemento, utilizer o comando `\ref{}` dentro do texto.
-
 Para as tabelas, utilizamos o pacote `xtable`. Diferentemente das figuras, este pacote já esta preparado para receber as informações de título e *label* da tabela em parâmetros específicos, convertendo o resultado para a linguagem $\LaTeX$. Para algumas formatações adicionais, como separador de milhar, posicionamento da tabela e marcador decimal, precisamos da função `print()`.
-
 ```{r}
 # 
 # ---
@@ -1965,39 +1734,23 @@ Para as tabelas, utilizamos o pacote `xtable`. Diferentemente das figuras, este 
 # table.placement="!hb")
 # ```
 ```
-
 O relatório criado em PDF pode ser facilmente gerado em outros formatos. Experimento clicar no botão knit, na seta para baixo, selecionando a opção `Knit to Word`. O relatório também pode ser gerado no formato `HTML`, todavia as tabelas de alguns ajustes neste caso. Tevemos alterar o tipo da tabela para `"html"`, com o argumento `type`, dentro do print. Alternativamente, podemos utilizar as funções `knitr::kable()` ou `pander::pander()`.
-
 # Salvando seus resultados no Github
-
 Depois de produzirmos nossos códigos, vamos subir as informações para o nosso repositório no GitHub. Para isso, temos três opões:
-
 - Clicar no botão de atalho do GitHub na barra superior
 - Clicar na janela superior à direita, na aba do Git
 - Usar o atalho de teclado `Ctrl`+`Alt`+`M`.
-
 <img src="figuras/git_entrar.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
-
 Pelo primeiro e terceiro métodos, a janela abaixo será exibida. Com o segundo método, a janela aparece depois de clicar no botão `commit`.
-
 <img src="figuras/git_commit.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
-
 Com ela, verificamos todos os objetos que foram alterados e/ou adicionados no diretório do projeto. A partir dele, devemos informar o que desejamos fazer com cada um deles. Podemos ignorá-los com o botão `Ignore`, para, neste caso, indicarmos que não desejamos que essa informação seja armazenada no repositório. 
-
 Para os arquivos que queremos armazenar, devemos selecionar e utilizar o botão `Stage`. Após selecionarmos os arquivos a serem enviados, devemos adicionar um cometário geral, para termos noção do que se refere aquela etapa do projeto, e utilizar o botão `Commit`. Com isso, nossos arquivos já estão prontos para serem enviados ao repositório. A última etapa consiste em utilizar o botão `Push`, que, após acionado, solicitará a confirmação do usuário e senha.
-
 Pronto! Seus scripts e arquivos já estão armazenados e versionados no Github. Caso queria continuar o projeto em outro local ou compartilhar as informações com alguém, basta a pessoa fazer um `Pull` do repositório.  
-
 # Encerramento
-
 Este foi o curso básico de introdução ao R, focado na manipulação dos microdados da PDAD 2015. O R é uma ferramenta muito ampla, que permite diversas outras aplicações, principalmente na área estatística. Aqui foi apresentada uma modesta parcela das funcionalidades que esta ferramenta pode oferecer. Ainda há muito mais a ser explorado. Utilizar o R constantemente fará com que você acumule habilidades e avance cada vez mais na utilização desta ferramenta.
-
 Abaixo você tem uma lista de aplicações analíticas sendo realizadas atualmente com o auxílio do R, segundo o blog [revolution analytics](http://blog.revolutionanalytics.com/2012/07/a-big-list-of-the-things-r-can-do.html)
-
 Expanda seus conhecimentos e compartilhe!
-
 Análises
-
 - Matemática básica
 - Estatística básica
 - Distribuições de probabilidade
@@ -2008,22 +1761,14 @@ Análises
 - Simulações e Geração de números aleatórios
 - Modelagem estatística
 - Teste estatísticos
-
-
 Visualização e gráficos
-
 - Gráficos estáticos
 - Gráficos dinâmicos
 - Mapas
 - Dispositivos e formatos
-
 Aplicações em R e Extensões ***
-
 - Aplicações
 - Mineração de dados
 - Metodologia estatística 
-
 Qualquer dúvida, mande um e-mail para [thiago.rosa@codeplan.df.gov.br](thiago.rosa@codeplan.df.gov.br).
-
 <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Thank-you-word-cloud.jpg/800px-Thank-you-word-cloud.jpg" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
-
