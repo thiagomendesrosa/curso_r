@@ -145,13 +145,13 @@ O **GitHub** é uma plataforma online de compartilhamento e armazenamento de có
 
 A Codeplan utiliza o GitHub (ou o GitLab) para gerenciar e versionar seus projetos, de modo a mantê-los organizados e atualizados, sem o risco de perder informações acidentalmente ou por alguma falha técnica. Outra vantagem é a característica colaborativa da plataforma, permitindo o acesso aos códigos, de qualquer lugar via internet, por outros pesquisadores. Se o repositório for público, qualquer pessoa pode contribuir com os projetos, proporcionando ganhos a todos os futuros usuários.
 
-Caso você não tenha conta, aproveite essa oportunidade para criar uma no [Github](https://github.com/). Vale lembrar que todos os pacotes desenvovidos no R ficam armazenados no GitHub e são de acesso público para qualquer usuário. Assim, você pode consultar a programação de todas as funções utilizadas no R.
+Caso você não tenha conta, aproveite essa oportunidade para criar uma no [Github](https://github.com/). Vale lembrar que todos os pacotes desenvolvidos no R ficam armazenados no GitHub e são de acesso público para qualquer usuário. Assim, você pode consultar a programação de todas as funções utilizadas no R.
 
 ## RMarkdown
 
 O **Markdown** é um sistema para tornar a escrita e a leitura de textos mais simples. Ele adiciona as formatações correspondentes a estrutura na qual você deseja apresentar seu texto. Tudo isso é feito de maneira simplificada, através de símbolos de teclado.
 
-No R, o RMarkdown, é um tipo de documento especial que contém tanto textos, no formato markdown, quanto códigos, em R. Os códigos em R podem ser inseridos diretamente no texto ou separados em estruturas específicas (*chunks*). Os códigos são executados sempre que o documento é processado para algum formato específico, que pode ser HTML (como esse documento que você está lendo), em PDF (formato $\LaTeX$) ou mesmo microsoft Word. Apresentações de slides também podem ser facilmente realizadas com o Rmarkdow, nos formatos `HTML` ou PDF ($\LaTeX$).
+No R, o RMarkdown, é um tipo de documento especial que contém tanto textos, no formato markdown, quanto códigos, em R. Os códigos em R podem ser inseridos diretamente no texto ou separados em estruturas específicas (*chunks*). Os códigos são executados sempre que o documento é processado para algum formato específico, que pode ser HTML (como esse documento que você está lendo), em PDF (formato $\LaTeX$) ou mesmo microsoft Word. Apresentações de slides também podem ser facilmente realizadas com o Rmarkdown, nos formatos `HTML` ou PDF ($\LaTeX$).
 
 Alguns relatórios e apresentações da Codeplan são produzidos em RMarkdown. Algumas apresentações da pesquisa [156](https://codeplanprojetos.github.io/156_estacionamentos_rotativos_2018/) e os relatórios da PDAD 2018 foram produzidos com esta ferramenta.
 
@@ -586,7 +586,7 @@ Agora que o projeto do nosso curso foi criado, vamos carregar os arquivos da PDA
 
 <img src="figuras/carregar.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
 
-Feito isso, vamos agora carregar os dados no R de diferentes médotos.
+Feito isso, vamos agora carregar os dados no R de diferentes métodos.
 
 ## Método point-and-click
 
@@ -1192,7 +1192,7 @@ Assim, percebemos que houve um pico de coletas logo após a data de referência 
 
 ## Criando mapas
 
-Com o R, é possível fazermos mapas com relativa facilidade. Para tanto, precisaremos de informações geográficas dos mapas que queremos desenhar. Como estamos utilizando a PDAD 2018, iremos fazer um mapa utilizando as poligonais da pesquisa. Vamos fazer conexão com o banco de dados do núcleo de geográfia e pegar as informações necessárias.
+Com o R, é possível fazermos mapas com relativa facilidade. Para tanto, precisaremos de informações geográficas dos mapas que queremos desenhar. Como estamos utilizando a PDAD 2018, iremos fazer um mapa utilizando as poligonais da pesquisa. Vamos fazer conexão com o banco de dados do núcleo de geografia e pegar as informações necessárias.
 
 ```{r, eval=FALSE}
 library(RPostgreSQL)
@@ -1221,15 +1221,50 @@ pdad_mor<- DBI::dbGetQuery(db,"select A01ra, FATOR_PROJ from pdad.mor2018") %>%
   dplyr::group_by(A01ra) %>%
   dplyr::summarise(n=sum(FATOR_PROJ)) 
 
+map<-
 RA %>%
   dplyr::left_join(pdad_mor,by=c("ra_num"="A01ra")) %>%
   dplyr::left_join(pontos) %>%
+  dplyr::mutate(nome2=factor(ra_num,
+                            levels=sort(RA$ra_num),
+                            labels=c('Plano Piloto',      
+                                     'Gama',
+                                     'Taguatinga',
+                                     'Brazlândia',
+                                     'Sobradinho',
+                                     'Planaltina',
+                                     'Paranoá',
+                                     'Núcleo Bandeirante',
+                                     'Ceilândia',
+                                     'Guará',
+                                     'Cruzeiro',
+                                     'Samambaia',
+                                     'Santa Maria',
+                                     'São Sebastião',
+                                     'Recanto das Emas',
+                                     'Lago Sul',
+                                     'Riacho Fundo',
+                                     'Lago Norte',
+                                     'Candangolândia',
+                                     'Águas Claras',
+                                     'Riacho Fundo II',
+                                     'Sudoeste/Octogonal',
+                                     'Varjão',
+                                     'Park Way',
+                                     'SCIA-Estrutural',
+                                     'Sobradinho II',
+                                     'Jardim Botânico',
+                                     'Itapoã',
+                                     'SIA',
+                                     'Vicente Pires',
+                                     'Fercal'))) %>%
   ggplot()+
   geom_sf(aes(fill = n)) +
   # muda escala de cores
   scale_fill_distiller(palette="Blues",
                        name="População",
-                       labels= scales::unit_format(unit = "Mil", scale = 1e-3)) +
+                       labels= scales::unit_format(unit = "Mil", scale = 1e-3),
+                       direction = 1) +
   # tira sistema cartesiano
   theme(panel.grid = element_line(colour = "transparent"),
         panel.background = element_blank(),
@@ -1237,11 +1272,20 @@ RA %>%
         axis.ticks = element_blank(),
         legend.title = element_text(size = 14),
         legend.text = element_text(size = 12)) +
-  geom_text(aes(long, lat, label = nome), colour = "white")+
-  geom_label_repel(aes(long, lat, label = nome),size=5, fontface="bold", family="Arial",
+  #geom_text(aes(long, lat, label = nome), colour = "white")+
+  geom_label_repel(aes(long, lat, label = nome2),size=5, fontface="bold", family="Arial",
                    label.padding=unit(0.10,"line")) +
   labs(x="",y="") 
+
+ggsave(map,filename = "figuras/mapa_pop.png",
+       bg = "transparent",
+       width = 30, 
+       height = 18, 
+       units = "cm")
+
 ```
+
+<img src="figuras/mapa_pop.png" style="width: 600px;display: block;margin-left: auto;margin-right: auto "/>
 
 
 ## Atualização de valores monetários
@@ -1980,7 +2024,7 @@ Comumente, utilizamos o primeiro *chunk* para inserir as configurações e opç�
 
 No meio do documento, podemos utilizar qualquer comando $\LaTeX$, da mesma maneira que faríamos, caso estivéssemos trabalhando com a ferramenta. Alguns atalhos facilitam uma série de formatações, como palavras em itálico, escritas entre asteriscos `*palavra*` e negrito, escritas entre duplos asteriscos `**palavra**`. Notas de rodapé são facilmente inseridas entre colchetes, precedido de um acento circunflexo `^[nota de rodapé]`. 
 
-Para inserirmos uma figura criada com o pacote `ggplot`, devemos "abrir" um *chunk* e chamar o objeto dentro dele. Para inserir o título da figura e seu respectivo *label*, utilizamos a opção `fig.cap="Título"`, no início do *chunk*. O *label* deve ser adicionado por dentro do título, com o comando `\\label{}`, este último derivado do $\LaTeX$. Repare que, neste caso, foi necessário inserir uma segunda barra invertida, de modo que o R entenda que estamos querendo utilizar um comando do $\LaTeX$ dentro do *chunk*. Para fazer referência ao elemento, utilizer o comando `\ref{}` dentro do texto.
+Para inserirmos uma figura criada com o pacote `ggplot`, devemos "abrir" um *chunk* e chamar o objeto dentro dele. Para inserir o título da figura e seu respectivo *label*, utilizamos a opção `fig.cap="Título"`, no início do *chunk*. O *label* deve ser adicionado por dentro do título, com o comando `\\label{}`, este último derivado do $\LaTeX$. Repare que, neste caso, foi necessário inserir uma segunda barra invertida, de modo que o R entenda que estamos querendo utilizar um comando do $\LaTeX$ dentro do *chunk*. Para fazer referência ao elemento, utilize o comando `\ref{}` dentro do texto.
 
 Para as tabelas, utilizamos o pacote `xtable`. Diferentemente das figuras, este pacote já esta preparado para receber as informações de título e *label* da tabela em parâmetros específicos, convertendo o resultado para a linguagem $\LaTeX$. Para algumas formatações adicionais, como separador de milhar, posicionamento da tabela e marcador decimal, precisamos da função `print()`.
 
