@@ -91,6 +91,23 @@ Como surgiu o R e quem o utiliza hoje?
 
 - As versões mais recentes do R podem ser baixadas [neste site](https://www.r-project.org/). Uma versão específica, e também gratuita, aprimorada da Microsoft para certas plataformas está disponível [neste site](https://mran.microsoft.com/download).
 
+## Debilidades do R
+
+- O R é preterido por programadores no desenvolvimento de aplicações (por exemplo, sua linguagem não se aproxima tanto da linguagem utilizada por esses profissionais quanto o python);
+
+- Para alguns pacotes, a documentação pode não ser tão clara ou detalhada quanto a existente em outras ferramentas (como o Stata, por exemplo);
+
+- Nem sempre é fácil interpretar as mensagens de erro. Nesses casos, o código aberto permite rastrear todos os passos executados, auxiliando as depurações;
+
+- Por ser uma ferramenta de código aberto, o suporte para problemas é baseado na comunidade. Não existe uma entidade que fique responsável por prover soluções. Contudo, a comunidade do R é muito ampla e prestativa, minimizando esse tipo de situação;
+
+- Também por ser código aberto, nem todos os pacotes recebem atualizações periódicas, podendo sofrer problemas de compatibilidade ou obsolescência ao longo do tempo;
+
+- A instalação de alguns pacotes e ferramentas podem ser complicadas, exigindo algum conhecimento mais avançado dos usuários conforme a plataforma utilizada;
+
+- Devido aos itens anteriores, a reprodutibilidade de alguns scripts podem ficar comprometida. Guardar informações da sessão em que o código foi executado pode mitigar essa situação (versão do R e dos pacotes utilizado). O gerenciamento centralizado do Rstudio Server, por exemplo, contribui para minimizar esse tipo de ocorrência.
+
+
 ## RStudio
 
 O RStudio é um ambiente integrado de desenvolvimento (*integrated development environment* -- IDE) para a linguagem R. Ele ajuda a organizar os trabalhos desenvolvidos, dividindo os conteúdos em janelas. Ele, por exemplo, tem recursos que facilitam a escrita dos códigos (com atalhos de teclado e o recurso de auto completar). Além disso, possibilita que algumas funções sejam utilizadas via *point-and-click*. Acesse  [essa página](https://csgillespie.github.io/efficientR/set-up.html#rstudio) para maiores informações (em inglês).
@@ -143,9 +160,9 @@ As informações armazenadas no banco de dados podem ser facilmente carregadas p
 
 O **GitHub** é uma plataforma online de compartilhamento e armazenamento de códigos. Os projetos do GitHub são baseados no `git`, uma ferramenta de versionamento de software.
 
-A Codeplan utiliza o GitHub (ou o GitLab) para gerenciar e versionar seus projetos, de modo a mantê-los organizados e atualizados, sem o risco de perder informações acidentalmente ou por alguma falha técnica. Outra vantagem é a característica colaborativa da plataforma, permitindo o acesso aos códigos, de qualquer lugar via internet, por outros pesquisadores. Se o repositório for público, qualquer pessoa pode contribuir com os projetos, proporcionando ganhos a todos os futuros usuários.
+A Codeplan utiliza o GitHub (ou o GitLab) para gerenciar e versionar seus projetos, de modo a mantê-los organizados e atualizados, sem o risco de perder informações acidentalmente ou por alguma falha técnica. Outra vantagem é a característica colaborativa da plataforma, permitindo o acesso aos códigos de qualquer lugar, via internet, por outros pesquisadores. Se o repositório for público, qualquer pessoa pode contribuir com os projetos, proporcionando ganhos a todos os futuros usuários.
 
-Caso você não tenha conta, aproveite essa oportunidade para criar uma no [Github](https://github.com/). Vale lembrar que todos os pacotes desenvolvidos no R ficam armazenados no GitHub e são de acesso público para qualquer usuário. Assim, você pode consultar a programação de todas as funções utilizadas no R.
+Caso você não tenha conta, aproveite essa oportunidade para criar uma no [Github](https://github.com/). Vale lembrar que todos os pacotes desenvolvidos no R ficam armazenados no GitHub e são de acesso público para qualquer usuário. Assim, você pode consultar a programação de todas as funções existentes no R *(nada de caixa preta!)*.
 
 ## RMarkdown
 
@@ -475,7 +492,7 @@ for(i in c(5:10)){
 }
 ```
 
-Por fim, temos  condicionante `while`. Ele executa a tarefa até que uma certa condição seja satisfeita. Por exemplo, vamos somar duas unidades a x enquanto o resultado é menor ou igual a 10. Esse condicionante pode, ser utilizado, por exemplo, para a maximização de funções.
+Por fim, temos  condicionante `while`. Ele executa a tarefa até que uma certa condição seja satisfeita. Por exemplo, vamos somar duas unidades a x enquanto o resultado é menor ou igual a 10. Esse condicionante pode ser utilizado, por exemplo, para a maximização de funções.
 
 ```{r}
 x <- 1
@@ -564,6 +581,27 @@ Por fim, outra forma de realizar pesquisas, utilizando a internet é com a funç
 RSiteSearch("psych") # Pesquisar um termo
 ```
 
+Para acessar o código de uma função, posicione o cursor sobre a função e tecle `F2`. Você pode acessar a função rodando somente o nome da função.
+
+```{r}
+psych::describe
+```
+
+Algumas funções são aplicadas por diferentes métodos, como é o caso da função `mean`. Para consultar os métodos disponíveis, utilize a função `methods`.
+
+```{r}
+methods(mean)
+mean.default
+mean.difftime
+```
+
+Para consultar uma função em qualquer pacote do R, utilize a função `getAnywhere`.
+
+```{r}
+getAnywhere(describe)
+getAnywhere(describe)[1]
+```
+
 O site [stackoverflow](https://stackoverflow.com/questions/tagged/r) é outra excelente fonte de informação. É muito possível que a dúvida ou o problema que você está encontrando em alguma programação já foi enfrentado por outro usuário. Assim, basta pesquisar sobre sua dúvida neste site (geralmente, feitas e respondidas em inglês).
 
 Por fim, uma boa e velha máquina de buscas é fundamental. Quase todas as repostas você encontrará com sua utilização.
@@ -574,7 +612,7 @@ Por fim, uma boa e velha máquina de buscas é fundamental. Quase todas as repos
 
 Vamos iniciar a atividade de manipulação de base de dados carregando a Pesquisa Distrital por Amostra de Domicílios 2018. A PDAD é uma pesquisa amostral conduzida pela Codeplan a cada dois anos, com representatividade para as 31 Regiões Administrativas, tendo por objetivo traçar as principais características dos domicílios e pessoas destas localidades.
 
-Vamos carregar a pesquisa de quatro maneiras diferentes. A PDAD 2018 está disponível, no formato `.csv` no site da Codeplan, neste [endereço](http://www.codeplan.df.gov.br/microdados-pdad-2018/). São cinco arquivos: dois deles contendo os microdados, referentes aos domicílios e aos moradores; dois arquivos de dicionário, um em formato `.xlsX` e outro em `.pdf`; e o questionário. 
+Vamos carregar a pesquisa de quatro maneiras diferentes. A PDAD 2018 está disponível, no formato `.csv` no site da Codeplan, neste [endereço](http://www.codeplan.df.gov.br/microdados-pdad-2018/). São cinco arquivos: dois deles contendo os microdados, referentes aos domicílios e aos moradores; dois arquivos de dicionário, um em formato `.xlsx` e outro em `.pdf`; e o questionário. 
 
 As bases de dados com microdados usualmente são separadas em tantos arquivos quanto necessário, seguidos sempre de uma documentação que detalha os aspectos técnicos, fornecendo informações para sua manipulação. Reserve um tempo para ler esses arquivos e se familiarizar com as questões presentes na pesquisa.
 
@@ -606,7 +644,8 @@ Vamos agora testar o segundo método. Novamente, clique em `Import Dataset`, no 
 
 <img src="figuras/import2.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
 
-Assim que você inserir o link para a pesquisa, clique em `Update` para visualizar uma prévia dos dados. Mude o delimitador dos dados para `Semicolon` e clique em importar. Repare, novamente, que o comando necessário para carregar os dados aparece no console. Desta vez, a função utilizada para ler o conjunto de dados foi `read_delim`. Mais uma vez, copie e rode essa linha de comando diretamente no console, para ver como carregar a base sem o auxílio do painel.
+Assim que você inserir o link para a pesquisa, clique em `Update` para visualizar uma prévia dos dados. Mude o delimitador dos dados para `Semicolon`, clique em `Configure` no campo `Locale` e altere o marcador decimal para "," (`Decimal Mark`), deixando vazio o campo `Grouping Mark`. Aceite as configuração realizadas clicando em `Configure` e, finalmente, clique em `Import`. Repare, novamente, que o comando necessário para carregar os dados aparece no console. Desta vez, a função utilizada para ler o conjunto de dados foi `read_delim`. Mais uma vez, copie e rode essa linha de comando diretamente no console, para ver como carregar a base sem o auxílio do painel.
+
 
 ```{r}
 pdad_2018_moradores <- read_delim("http://www.codeplan.df.gov.br/wp-content/uploads/2019/06/pdad_2018_moradores.csv", 
@@ -785,7 +824,7 @@ Vamos, então, carregar a base de pessoas. A estrutura para realizar uma consult
 Como consultamos os nomes das tabelas anteriormente, vamos carregar somente as informações sobre a Região Administrativa e o número de moradores no domicílio, para realizarmos um pequeno exercício.
 
 ```{r}
-# Carregar a base de moradores da PDAD 2015
+# Carregar a base de moradores da PDAD 2018
 pdad_2018_moradores <- RODBC::sqlQuery(db,"select A01ra from pdad.mor2018")
 ```
 
@@ -800,7 +839,7 @@ db <- DBI::dbConnect(odbc::odbc(), "db_codeplan",uid=Sys.getenv("matricula"),pwd
 
 O primeiro argumento indica o driver necessário para estabelecer a conexão. Os demais argumentos são os mesmo utilizados para a conexão com o pacote `RODBC`. Assim que você fizer a conexão, o pacote já ativa a aba `Connections`, no painel superior direito. 
 
-<img src="figuras/login.PNG" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
+<img src="figuras/banco_consulta.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
 
 Por ali, você pode consultar os bancos, esquemas e tabelas disponíveis, bem como as colunas. Para verificar uma prévia com as 1.000 primeiras linhas, basta clicar ícone da tabela desejada. Para consultar as tabelas ou colunas disponíveis (que são retornadas em formato de vetor), utilize as funções abaixo.
 
@@ -1206,7 +1245,7 @@ db_geo <- DBI::dbConnect(PostgreSQL(),dbname = "nucleo_geo",
                       host=Sys.getenv("host_geo"),
                       password = Sys.getenv("senha_geo"))
 
-RA <- postGIStools::get_postgis_query(db_geo, "SELECT * FROM pdad.tb_ra_pdad_2018 ",
+RA <- postGIStools::get_postgis_query(db_geo, "SELECT * FROM nivel_territorial.tb_ra_pdad_2018 ",
                         geom_name = "geom")
 
 pontos <- fortify(RA) %>%
