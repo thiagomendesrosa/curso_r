@@ -2171,6 +2171,31 @@ Para as tabelas, utilizamos o pacote `xtable`. Diferentemente das figuras, este 
 
 O relatório criado em PDF pode ser facilmente gerado em outros formatos. Experimento clicar no botão knit, na seta para baixo, selecionando a opção `Knit to Word`. O relatório também pode ser gerado no formato `HTML`, todavia as tabelas necessitam de alguns ajustes neste caso. Devemos alterar o tipo da tabela para `"html"`, com o argumento `type`, dentro do print. Alternativamente, podemos utilizar as funções `knitr::kable()` ou `pander::pander()`.
 
+# Salvando seus resultados no Github
+
+
+Para configurar suas credenciais no github, digite no terminal os seguintes comandos:
+
+- git config --global user.name "nome de usuário"
+
+- git config --global user.password "senha"
+
+Depois de produzirmos nossos códigos, vamos subir as informações para o nosso repositório no GitHub. Para isso, temos três opões:
+
+- Clicar no botão de atalho do GitHub na barra superior
+- Clicar na janela superior à direita, na aba do Git
+- Usar o atalho de teclado `Ctrl`+`Alt`+`M`.
+
+<img src="figuras/git_entrar.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
+
+Pelo primeiro e terceiro métodos, a janela abaixo será exibida. Com o segundo método, a janela aparece depois de clicar no botão `commit`.
+
+<img src="figuras/git_commit.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
+Com ela, verificamos todos os objetos que foram alterados e/ou adicionados no diretório do projeto. A partir dele, devemos informar o que desejamos fazer com cada um deles. Podemos ignorá-los com o botão `Ignore`, para, neste caso, indicarmos que não desejamos que essa informação seja armazenada no repositório. 
+Para os arquivos que queremos armazenar, devemos selecionar e utilizar o botão `Stage`. Após selecionarmos os arquivos a serem enviados, devemos adicionar um cometário geral, para termos noção do que se refere aquela etapa do projeto, e utilizar o botão `Commit`. Com isso, nossos arquivos já estão prontos para serem enviados ao repositório. A última etapa consiste em utilizar o botão `Push`, que, após acionado, solicitará a confirmação do usuário e senha.
+Pronto! Seus scripts e arquivos já estão armazenados e versionados no Github. Caso queria continuar o projeto em outro local ou compartilhar as informações com alguém, basta a pessoa fazer um `Pull` do repositório.  
+
+
 # Encerramento
 
 Essa foi a oficina da PDAD 2018 aplicada ao R. O R é uma ferramenta muito ampla, que permite diversas outras aplicações, principalmente na área estatística. Aqui foi apresentada uma modesta parcela das funcionalidades que esta ferramenta pode oferecer. Ainda há muito mais a ser explorado. Utilizar o R constantemente fará com que você acumule habilidades e avance cada vez mais na utilização desta ferramenta.
