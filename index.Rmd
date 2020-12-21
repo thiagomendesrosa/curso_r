@@ -116,7 +116,7 @@ Para baixar o RStudio, acesse [este site](https://www.rstudio.com/products/rstud
 
 Um recurso muito importante do RStudio, amplamente utilizado na Codeplan, é a possibilidade de criar projetos. Nossos projetos são conduzidos com controle de versão, por meio do [Github](https://github.com/).
 
-## Rsutdio Server
+## Rstudio Server
 
 A Codeplan conta com o RStudio server, o que significa que você pode acessar e trabalhar de qualquer máquina conectada à rede do GDF diretamente do navegador. Clique [aqui](http://rserver.codeplan.df.gov.br/) para acessar o servidor.
 
