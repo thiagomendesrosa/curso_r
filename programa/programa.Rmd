@@ -1,0 +1,132 @@
+---
+title: "Curso introdutório de de SQL e R"
+author: 
+ - Luiz Rubens Câmara de Araújo 
+ - Thiago Mendes Rosa
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  word_document: default
+header-includes: 
+  - \renewcommand{\and}{\\}
+mainfont: Times New Roman
+fontsize: 12pt
+---
+
+**Instrutor de SQL**
+
+Luiz Rubens - Dipes\\Gereps
+
+Telefone: 61 3342-2272
+
+E-mail: \url{Luiz.rubens@codeplan.df.gov.br}
+
+
+\bigskip
+
+**Instrutor de R**
+
+Thiago - Dieps\\Gereps
+
+Telefone: 61 3342-2272
+
+E-mail: \url{thiago.rosa@codeplan.df.gov.br}
+
+\bigskip
+
+**Data do curso**
+
+Dias 03/02/2021, 04/02/2021, 10/02/2021 e 11/02/2021
+
+Horário: 13:00 às 18:00
+
+Carga horária: 20 horas
+
+\bigskip
+
+**Público-alvo**
+
+- Estagiários da Codeplan
+- Pesquisadores da Codeplan
+- Pessoas da Codeplan com desejo de adquirir novos conhecimentos
+
+\bigskip
+
+**Requisitos básico:**
+
+- Conexão VPN à rede do GDF e ao computador da Codeplan
+
+**Requisitos desejáveis:**
+
+- Noções de lógica de programação
+- Noções básicas de estatística
+- Noções básicas de inglês (para facilitar pesquisas e entendimento das funções)
+
+\bigskip
+
+**Conteúdo de SQL:**
+
+- Conceito de Banco de Dados;
+- A linguagem SQL;
+- Vantagens da linguagem SQL;
+- Comandos SQL;
+- Como instalar e configurar o softwarer DBeaver;
+- Como instalar e configurar o Driver ODBC no Windows 10;
+- Explorando o comando select:
+    - Consultas básicas;
+    - Usando ALIAS;
+    - Cláusula ORDER BY;
+    - Cláusula DISTINCT;
+    - Criando grupos com a cláusula CASE;
+    - Aplicando filtros a seleção;
+    - Operadores e Precedência;
+    - Agrupando dados.
+- Junções de Tabelas ou Consultas.
+
+\bigskip
+
+**Conteúdo de R:**
+
+O material completo do curso está disponível em:
+
+\url{https://thiagomendesrosa.github.io/curso_r/}.
+
+- Introdução:
+    - Por que usar o R e não outros softwares?
+    - RSutdio Server
+    - Banco de dados da Codeplan
+    - GitHub
+    - RMarkdown
+
+\bigskip    
+    
+    
+- Preliminares:
+    - Estrutura do RStudio Server;
+    - Pacotes;
+    - Operadores básicos;
+    - Utilizar chamada de funções;
+    - Criar uma função;
+    - Tipos de dados;
+    - Controles de fluxo;
+    - Operador Pipe;
+    - Onde encontrar ajuda;
+    
+\bigskip    
+    
+- Manipulação da PDAD 2018
+    - Carga da Pesquisa Distrital por Amostra de Domicílios 2018
+    - Consultas ao banco de dados da Codeplan
+    - Introdução ao `tidyverse`
+    - Utilização do pacote `survey` para pesquisas amostrais
+    - Estimativa de totais e proporções populacionais
+    - Estimativas dos intervalos de confiança
+    - Aplicação do operador `pipe`
+    - Manipulação de textos com o pacote `stringr`
+    - Manipulação de datas com o pacote `lubridate`
+    - Criação de mapas
+    - Transformação de dados com `dplyr` e `tidyr`
+    - Visualização de dados com `ggplot2`
+    - Elaboração de relatórios com o `RMarkdown`
+    - Utilização do Github com o RStudio Server para controle e versionamento de projetos
+    

@@ -1,0 +1,114 @@
+---
+title: "Mini relatório da PDAD 2018"
+author: "Thiago Mendes Rosa"
+date: "`r Sys.Date()`"
+output:
+  pdf_document: default
+  word_document: default
+header-includes:
+- \usepackage[brazilian]{babel}
+- \usepackage[utf8]{inputenc}
+- \usepackage{float}
+- \usepackage{booktabs}
+- \usepackage{tabu}
+---
+```{r setup, include=FALSE}
+library(forcats)
+library(scales)
+knitr::opts_chunk$set(echo = F,fig.pos = 'H',warning=F)
+# Carregar objetos
+load("../dados/objetos.rda")
+# Definir função para separador de milhar e decimal dos chunks
+knitr::knit_hooks$set(inline = function(x) {
+ prettyNum(x, big.mark=".",decimal.mark = ",")
+})
+options(kableExtra.latex.load_packages = FALSE)
+# Habilitar opção abaixo para gerar tabelas em word. Para tanto,
+# retirar o argumento "latex" da função "kable"
+#options(kableExtra.auto_format = FALSE)
+library(kableExtra)
+```
+
+# PDAD 2018
+
+A PDAD 2018 visitou **`r nrow(pdad_2018_domicilios)`** domicílios e coletou informações de `r nrow(pdad_2018_moradores)` moradores.
+
+## Estrutura etária
+
+A estrutura etária dos moradores do Distrito Federal é apresentada  Figura \ref{fig:piramide}.
+
+```{r piramide, fig.cap="Pirâmide etária",out.extra=''}
+piramide_grafico
+```
+
+Os valores específicos podem ser verificados na tabela \ref{tab:piramide.tab}.
+
+```{r piramide.tab, results='asis'}
+piramide %>%
+knitr::kable("latex",
+            caption="Pirâmide etária",
+            booktabs = T,
+            digits = 0,
+            format.args=list(big.mark = ".",
+                             decimal.mark = ",")) %>%
+ kableExtra::kable_styling(latex_options = c("HOLD_position"),
+                           full_width=T) %>%
+ kableExtra::footnote(general_title ="",
+                      general="Fonte: PDAD 2018",
+                      fixed_small_size=T)
+```
+\clearpage
+
+## Salários
+
+No que diz respeito aos salários, sua distribuição por faixas de lário mínimo^[O salário considerado foi de R$ 954,00] é apresentada  Figura \ref{fig:salarios}.
+
+```{r salarios, fig.cap="Salarios por faixa de SM",out.extra=''}
+salario_grafico
+```
+
+Os dados podem ser consultados na Tabela \ref{tab:salarios.tab}.
+
+```{r salarios.tab, results='asis'}
+salario %>%
+knitr::kable("latex",
+            caption="Salarios por faixa de SM",
+            booktabs = T,
+            linesep = "",
+            format.args=list(big.mark = ".",
+                             decimal.mark = ",")) %>%
+ kableExtra::kable_styling(latex_options = c("HOLD_position"),
+                            full_width=T) %>%
+  kableExtra::column_spec(1,width = "5cm") %>% 
+ kableExtra::footnote(general_title ="",
+                      general="Fonte: PDAD 2018",
+                      fixed_small_size=T)
+```
+\clearpage
+\pagebreak
+
+## Esgotamento
+
+Por fim, o esgotamento sanitário é apresentado na Figura \ref{fig:esgotamento}
+
+```{r esgotamento, fig.cap="Esgotamento sanitário",out.extra=''}
+esgotamento_grafico
+```
+
+Os números podem ser consultados na Tabela \ref{tab:esgotamento.tab}.
+
+```{r esgotamento.tab, results='asis'}
+esgotamento %>% 
+knitr::kable("latex",
+            caption="Esgotamento sanitário",
+            booktabs = T,
+            digits = 2,
+            format.args=list(big.mark = ".",
+                             decimal.mark = ",")) %>%
+ kableExtra::kable_styling(latex_options = c("HOLD_position"),
+                            full_width=T) %>%
+  kableExtra::column_spec(1,width = "6cm") %>% 
+ kableExtra::footnote(general_title ="",
+                      general="Fonte: PDAD 2018",
+                      fixed_small_size=T)
+``` 
