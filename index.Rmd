@@ -672,6 +672,80 @@ Agora que o projeto do nosso curso foi criado, vamos carregar os arquivos da PDA
 
 <img src="figuras/carregar.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
 
+É possível fazer o download dos arquivos diretamente pelo R seguindo os passos abaixo.
+
+```{r}
+# Criar um novo diretório
+#dir.create("dados")
+
+# Listar as informações da URL
+library(RCurl)
+
+# Pegar informações da URL
+info <- getURL("http://www.codeplan.df.gov.br/microdados-pdad-2018/",
+               verbose=TRUE,
+               ftp.use.epsv=TRUE, 
+               dirlistonly = TRUE)
+
+# Separar as informações em linhas
+info <- str_split(info,"\n") %>% 
+  unlist
+
+# Extrair as informações do arquivo csv de interesse
+b <- info[str_detect(info,"31ras.csv")]
+
+# Pegar a URL, extraindo a informação entre aspas
+b <- str_match(b, '["](.*?)["]')[3:4]
+
+# Criar o caminho de destino, pegando o nome do arquivo
+td <- paste0("dados/",str_extract(b,'mor(.*?).csv$')[1])
+
+# Fazer o download do csv
+download.file(b[1], td, mode="wb")
+
+# Fazer a mesma coisa para o arquivo de domicílios
+td <- paste0("dados/",str_extract(b,'dom(.*?).csv$')[2])
+
+download.file(b[2], td, mode="wb")
+
+# Fazer o download do dicionário em excel
+d <- info[str_detect(info,"2018.xlsx")]
+
+# Pegar a url
+d <- str_match(d, '["](.*?)["]')[2]
+
+# Pegar o nome do arquivo
+td <- paste0("dados/",str_extract(d,'Dic(.*?).xlsx$'))
+
+# Fazer o download
+download.file(d, td, mode="wb")
+
+# Pegar os arquivos pdf da PDAD
+pdf <- info[str_detect(info,"2018.pdf|Impressao.pdf")] %>%
+  # Pegar a URL
+  str_match('href=(.*?).pdf') %>% 
+  # Tratar a URL
+  str_remove('href="') %>% 
+  # Ficar com as linhas de interesse
+  .[1:2]
+
+# Baixar os dois arquivos
+for(i in pdf){
+
+  # Pegar o nome do arquivo
+  nome <- str_extract(i,"6(.*?)$") %>% 
+    str_remove("6/")
+  
+  # Criar o caminho do arquivo
+  td <- paste0("dados/",nome)
+  
+  # Fazer o download
+  download.file(i, td, mode="wb")
+}
+
+```
+
+
 Feito isso, vamos agora carregar os dados no R de diferentes métodos.
 
 ## Método point-and-click
@@ -685,7 +759,7 @@ Nesta primeira opção, você seleciona o arquivo `.csv` salvo no passo anterior
 Note que, no painel console, o código necessário para carregar a base foi inserido automaticamente. Teste novamente, copiando essa linha de comando e rodando no console.
 
 ```{r}
-pdad_2018_moradores <- read.csv2("dados/mor2018_31ra.csv", stringsAsFactors=FALSE)
+pdad_2018_moradores <- read.csv2("dados/mor2018_31ras.csv", stringsAsFactors=FALSE)
 ```
 
 Utilize a função `View()` para visualizar a base de dados (inserindo o nome do objeto dentro dos parênteses), ou clique em cima do objeto no painel `Environment`.
@@ -751,7 +825,7 @@ pdad_2018_moradores <- data.table::fread("http://www.codeplan.df.gov.br/wp-conte
                                           data.table = FALSE)
 
 # Carregar a base de um arquivo local
-pdad_2018_moradores <- data.table::fread("dados/mor2018_31ra.csv",
+pdad_2018_moradores <- data.table::fread("dados/mor2018_31ras.csv",
                                     dec = ",",encoding = "Latin-1",
                                           data.table = FALSE)
 ```
