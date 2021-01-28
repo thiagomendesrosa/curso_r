@@ -674,7 +674,7 @@ Agora que o projeto do nosso curso foi criado, vamos carregar os arquivos da PDA
 
 É possível fazer o download dos arquivos diretamente pelo R seguindo os passos abaixo.
 
-```{r}
+```{r, eval=FALSE}
 # Criar um novo diretório
 #dir.create("dados")
 
@@ -1019,7 +1019,7 @@ Para termos o dicionário de dados da base de moradores prontamente acessível d
 # Listar os arquivos do diretório dados
 list.files("dados")
 # Carregar as informações do dicionário
-dic_moradores <- readxl::read_excel("dados/Dicionário_de_Variáveis_PDAD_2018.xlsx",
+dic_moradores <- readxl::read_excel("dados/Dicionario_de_Variaveis_PDAD_2018.xlsx",
                                     skip = 1,
                                     sheet = 2)
 ```
@@ -1154,7 +1154,7 @@ pdad_2018_domicilios <- DBI::dbGetQuery(db,"select * from pdad.dom2018_31ras")
 
 ```{r}
 # Carregar as informações do dicionário
-dic_domiclios <- readxl::read_excel("dados/Dicionário_de_Variáveis_PDAD_2018.xlsx",
+dic_domiclios <- readxl::read_excel("dados/Dicionario_de_Variaveis_PDAD_2018.xlsx",
                                     skip = 1, sheet = 1)
 
 # Criar um objeto com os rótulos
