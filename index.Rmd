@@ -2347,7 +2347,7 @@ Rode o arquivo de exemplo, clicando no botão `knit`, para verificar o resultado
 
 Vamos agora criar o nosso relatório. Para isso, vamos utilizar apenas cinco pacotes do $\LaTeX$, o `babel`, para conseguirmos produzir o relatório em português, o pacote `inputenc`, que cuidará do encoding dos caracteres, o `float`, que cuidará das imagens e os pacotes `booktabs` e `tabu` para a confecção das tabelas. Fazemos isso adicionando no preâmbulo do documento a linha `header-includes:`, indicando os pacotes do $\LaTeX$ a serem utilizados. Qualquer outro pacote pode ser inserido neste espaço. Para rodar o relatório em PDF, você precisará ter alguma distribuição do `TeX/LaTeX`. Uma opção em Windows é [MiKTeK](https://miktex.org/download). Durante a instalação, marque a opção *"Install missing packages on-the-fly"* como *"yes"*. O RStudio server já conta com uma instalação em sua máquina.
 
-Comumente, utilizamos o primeiro *chunk* para inserir as configurações e opções a serem utilizadas no decorrer do documento. Note que utilizamos a opção `include=FALSE` para que este *chunk* não seja incluído no documento. Nele, carregamos os pacotes necessários, ajustamos as configurações padrão dos demais *chunks*, carregamos a base e ajustamos uma configuração do pacote `kanleExtra`, que será utilizado para gerar nossas tabelas no formato $\LaTeX$. 
+Comumente, utilizamos o primeiro *chunk* para inserir as configurações e opções a serem utilizadas no decorrer do documento. Note que utilizamos a opção `include=FALSE` para que este *chunk* não seja incluído no documento. Nele, carregamos os pacotes necessários, ajustamos as configurações padrão dos demais *chunks*, carregamos a base e ajustamos uma configuração do pacote `kableExtra`, que será utilizado para gerar nossas tabelas no formato $\LaTeX$. 
 
 No meio do documento, podemos utilizar qualquer comando $\LaTeX$, da mesma maneira que faríamos caso estivéssemos trabalhando com a ferramenta. Alguns atalhos facilitam uma série de formatações, como palavras em itálico, escritas entre asteriscos `*palavra*` e negrito, escritas entre duplos asteriscos `**palavra**`. Notas de rodapé são facilmente inseridas entre colchetes, precedido de um acento circunflexo `^[nota de rodapé]`. 
 
@@ -2355,7 +2355,7 @@ Para inserirmos uma figura criada com o pacote `ggplot`, devemos "abrir" um *chu
 
 Para as tabelas, utilizamos o pacote `knitr`, usualmente em conjunto com o pacote `kableExtra` para customizarmos as tabelas. Diferentemente das figuras, este pacote já esta preparado para receber as informações de título em parâmetros específicos, convertendo o resultado para a linguagem $\LaTeX$. Para algumas formatações adicionais, como separador de milhar, posicionamento da tabela e marcador decimal, a própria função `kable()` pode ser utilizada. Para referenciar as tabelas, utilize `tab:nome do chunk`. Abaixo está um exemplo de relatório, que deve ser executado em um arquivo `.Rmd`, bastando retirar os sustenidos.
 
-```{r}
+```{r,eval=FALSE}
 # ---
 # title: "Mini relatório da PDAD 2018"
 # author: "Thiago Mendes Rosa"
@@ -2419,7 +2419,7 @@ Para as tabelas, utilizamos o pacote `knitr`, usualmente em conjunto com o pacot
 # 
 # ## Salários
 # 
-# No que diz respeito aos salários, sua distribuição por faixas de lário mínimo^[O salário considerado foi de R$ 954,00] é apresentada  Figura \ref{fig:salarios}.
+# No que diz respeito aos salários, sua distribuição por faixas de salário mínimo^[O salário considerado foi de R$ 954,00] é apresentada  Figura \ref{fig:salarios}.
 # 
 # ```{r salarios, fig.cap="Salarios por faixa de SM",out.extra=''}
 # salario_grafico
