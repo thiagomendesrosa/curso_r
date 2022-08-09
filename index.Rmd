@@ -5,7 +5,7 @@ title: |
   
   \
   
-  Minicurso de R aplicado a manipulação de microdados do IPEDF
+  Minicurso de R aplicado à manipulação de microdados do IPEDF
 author: "Thiago Mendes Rosa"
 date: "`r format(Sys.Date(),'%d/%m/%Y')`"
 output:
