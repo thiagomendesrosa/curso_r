@@ -1,94 +1,135 @@
 "RA";"MES";"n"
-"Plano Piloto";"jun";557
-"Plano Piloto";"jul";307
-"Plano Piloto";"ago";287
-"Plano Piloto";"set";277
-"Plano Piloto";"out";134
-"Gama";"abr";429
-"Gama";"mai";409
-"Gama";"ago";5
-"Taguatinga";"jul";500
-"Taguatinga";"ago";550
-"Taguatinga";"set";78
-"Brazlândia";"jun";222
-"Brazlândia";"jul";385
-"Brazlândia";"ago";3
-"Sobradinho";"jun";437
-"Sobradinho";"jul";224
-"Sobradinho";"ago";20
-"Sobradinho";"out";1
-"Planaltina";"ago";791
-"Paranoá";"jul";225
-"Paranoá";"ago";319
-"Núcleo Bandeirante";"mar";267
-"Núcleo Bandeirante";"abr";154
-"Núcleo Bandeirante";"jun";82
-"Núcleo Bandeirante";"jul";6
-"Núcleo Bandeirante";"ago";18
-"Ceilândia";"mai";1406
-"Ceilândia";"jun";420
-"Guará";"jul";290
-"Guará";"ago";418
-"Guará";"set";124
-"Guará";"out";1
-"Cruzeiro";"abr";186
-"Cruzeiro";"mai";103
-"Cruzeiro";"jun";167
-"Cruzeiro";"jul";89
-"Cruzeiro";"ago";1
-"Samambaia";"mar";535
-"Samambaia";"abr";149
-"Samambaia";"mai";34
-"Santa Maria";"abr";191
-"Santa Maria";"mai";509
-"Santa Maria";"jul";1
-"Santa Maria";"ago";3
-"São Sebastião";"jul";174
-"São Sebastião";"ago";572
-"São Sebastião";"set";114
-"São Sebastião";"out";51
-"Recanto das Emas";"abr";774
-"Recanto das Emas";"mai";8
-"Lago Sul";"ago";65
-"Lago Sul";"set";161
-"Lago Sul";"out";122
-"Riacho Fundo";"mar";374
-"Riacho Fundo";"abr";136
-"Riacho Fundo";"jun";10
-"Riacho Fundo";"ago";19
-"Lago Norte";"ago";97
-"Lago Norte";"set";212
-"Lago Norte";"out";70
-"Candangolândia";"mar";350
-"Candangolândia";"abr";170
-"Candangolândia";"jun";2
-"Candangolândia";"jul";7
-"Candangolândia";"ago";7
-"Águas Claras";"ago";705
-"Águas Claras";"set";632
-"Águas Claras";"out";58
-"Riacho Fundo II";"abr";538
-"Riacho Fundo II";"jul";15
-"Sudoeste/Octogonal";"ago";79
-"Sudoeste/Octogonal";"set";156
-"Sudoeste/Octogonal";"out";224
-"Varjão";"jun";611
-"Varjão";"set";2
-"Park Way";"ago";6
-"Park Way";"set";236
-"Park Way";"out";103
-"SCIA-Estrutural";"set";560
-"Sobradinho II";"jul";415
-"Sobradinho II";"ago";355
-"Jardim Botânico";"jul";68
-"Jardim Botânico";"ago";204
-"Jardim Botânico";"set";35
-"Jardim Botânico";"out";130
-"Itapoã";"jul";589
-"Itapoã";"set";1
-"SIA";"set";95
-"Vicente Pires";"ago";116
-"Vicente Pires";"set";570
-"Vicente Pires";"out";35
-"Fercal";"jul";369
-"Fercal";"ago";192
+"Plano Piloto";"jun";2
+"Plano Piloto";"ago";1
+"Plano Piloto";"set";208
+"Plano Piloto";"out";1091
+"Plano Piloto";"nov";2360
+"Plano Piloto";"dez";1289
+"Gama";"mai";140
+"Gama";"jun";259
+"Gama";"jul";238
+"Gama";"ago";26
+"Taguatinga";"mai";155
+"Taguatinga";"jun";176
+"Taguatinga";"jul";293
+"Taguatinga";"ago";415
+"Taguatinga";"set";418
+"Taguatinga";"out";266
+"Brazlândia";"mai";275
+"Brazlândia";"jun";180
+"Brazlândia";"jul";62
+"Brazlândia";"ago";33
+"Sobradinho";"mai";206
+"Sobradinho";"jun";140
+"Sobradinho";"jul";51
+"Sobradinho";"ago";148
+"Sobradinho";"set";88
+"Sobradinho";"dez";53
+"Planaltina";"jun";190
+"Planaltina";"jul";203
+"Planaltina";"ago";648
+"Planaltina";"set";74
+"Paranoá";"set";218
+"Paranoá";"out";276
+"Paranoá";"nov";56
+"Núcleo Bandeirante";"jun";42
+"Núcleo Bandeirante";"jul";428
+"Núcleo Bandeirante";"ago";75
+"Ceilândia";"mai";520
+"Ceilândia";"jun";37
+"Ceilândia";"jul";90
+"Ceilândia";"ago";34
+"Ceilândia";"set";59
+"Ceilândia";"out";64
+"Guará";"ago";503
+"Guará";"set";502
+"Guará";"out";127
+"Cruzeiro";"set";367
+"Cruzeiro";"out";133
+"Cruzeiro";"nov";3
+"Cruzeiro";"dez";1
+"Samambaia";"mai";101
+"Samambaia";"jun";143
+"Samambaia";"jul";385
+"Samambaia";"ago";95
+"Samambaia";"set";40
+"Samambaia";"out";136
+"Samambaia";"nov";71
+"Santa Maria";"jun";436
+"Santa Maria";"jul";140
+"Santa Maria";"ago";33
+"São Sebastião";"set";631
+"São Sebastião";"out";417
+"São Sebastião";"nov";37
+"Recanto das Emas";"mai";336
+"Recanto das Emas";"jun";100
+"Recanto das Emas";"jul";100
+"Recanto das Emas";"ago";35
+"Lago Sul";"jul";1
+"Lago Sul";"ago";1
+"Lago Sul";"set";20
+"Lago Sul";"out";205
+"Lago Sul";"nov";514
+"Lago Sul";"dez";95
+"Riacho Fundo";"mai";368
+"Riacho Fundo";"jun";43
+"Riacho Fundo";"jul";9
+"Riacho Fundo";"ago";14
+"Riacho Fundo";"set";105
+"Riacho Fundo";"out";8
+"Riacho Fundo";"nov";6
+"Lago Norte";"out";103
+"Lago Norte";"nov";173
+"Lago Norte";"dez";608
+"Candangolândia";"jun";436
+"Candangolândia";"jul";71
+"Águas Claras";"ago";1
+"Águas Claras";"set";22
+"Águas Claras";"out";998
+"Águas Claras";"nov";550
+"Riacho Fundo II";"ago";115
+"Riacho Fundo II";"set";415
+"Riacho Fundo II";"out";100
+"Sudoeste/Octogonal";"out";651
+"Sudoeste/Octogonal";"nov";368
+"Sudoeste/Octogonal";"dez";92
+"Varjão";"ago";182
+"Varjão";"set";239
+"Varjão";"out";48
+"Park Way";"jul";1
+"Park Way";"out";51
+"Park Way";"nov";417
+"Park Way";"dez";306
+"SCIA-Estrutural";"set";604
+"SCIA-Estrutural";"out";385
+"Sobradinho II";"jun";1
+"Sobradinho II";"set";299
+"Sobradinho II";"out";264
+"Sobradinho II";"nov";80
+"Jardim Botânico";"ago";411
+"Jardim Botânico";"set";655
+"Jardim Botânico";"out";14
+"Jardim Botânico";"nov";189
+"Jardim Botânico";"dez";104
+"Itapoã";"out";402
+"Itapoã";"nov";132
+"Itapoã";"dez";2
+"SIA";"out";138
+"SIA";"nov";147
+"SIA";"dez";11
+"Vicente Pires";"mai";146
+"Vicente Pires";"jun";114
+"Vicente Pires";"jul";62
+"Vicente Pires";"ago";45
+"Vicente Pires";"set";12
+"Vicente Pires";"out";39
+"Vicente Pires";"nov";786
+"Vicente Pires";"dez";446
+"Fercal";"out";39
+"Fercal";"nov";410
+"Fercal";"dez";46
+"Sol Nascente/Pôr do Sol";"jun";392
+"Sol Nascente/Pôr do Sol";"jul";181
+"Arniqueira";"set";7
+"Arniqueira";"out";519
+"Arniqueira";"nov";11

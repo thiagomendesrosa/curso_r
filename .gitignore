@@ -3,3 +3,6 @@
 .RData
 .Ruserdata
 /dados
+.Rdata
+.httr-oauth
+.DS_Store

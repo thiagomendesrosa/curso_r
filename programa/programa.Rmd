@@ -1,9 +1,14 @@
 ---
-title: "Curso introdutório de de SQL e R"
+title: |
+
+  ![](Rlogo.png){width=1in} 
+  
+  \
+
+  Curso introdutório de R
 author: 
- - Luiz Rubens Câmara de Araújo 
  - Thiago Mendes Rosa
-date: "`r Sys.Date()`"
+date: "`r format(Sys.Date(),'%d/%m/%Y')`"
 output:
   pdf_document: default
   word_document: default
@@ -13,75 +18,44 @@ mainfont: Times New Roman
 fontsize: 12pt
 ---
 
-**Instrutor de SQL**
 
-Luiz Rubens - Dipes\\Gereps
+**Instrutor**
 
-Telefone: 61 3342-2272
-
-E-mail: \url{Luiz.rubens@codeplan.df.gov.br}
-
-
-\bigskip
-
-**Instrutor de R**
-
-Thiago - Dieps\\Gereps
+Thiago Mendes Rosa - DIEPS/COEPS
 
 Telefone: 61 3342-2272
 
-E-mail: \url{thiago.rosa@codeplan.df.gov.br}
+E-mail: \url{thiago.rosa@ipe.df.gov.br}
 
 \bigskip
 
 **Data do curso**
 
-Dias 03/02/2021, 04/02/2021, 10/02/2021 e 11/02/2021
+Dias 10/08/2022, 11/08/2022 e 12/08/2022
 
-Horário: 13:00 às 18:00
+Horário: 09:00 às 13:00
 
-Carga horária: 20 horas
+Carga horária: 15 horas
 
 \bigskip
 
 **Público-alvo**
 
-- Estagiários da Codeplan
-- Pesquisadores da Codeplan
-- Pessoas da Codeplan com desejo de adquirir novos conhecimentos
+- Estagiários do IPEDF
+- Pesquisadores do IPEDF
+- Pessoas do IPEDF com desejo de adquirir novos conhecimentos
 
 \bigskip
 
 **Requisitos básico:**
 
-- Conexão VPN à rede do GDF e ao computador da Codeplan
+- Ter login de acesso ao RStudio Server do IPEDF (solicitações para criação de usuário devem ser encaminhadas para DIEPS/COEST -- frederico.souza@ipe.df.gov.br e Luiz.araujo@ipe.df.gov.br)
 
 **Requisitos desejáveis:**
 
 - Noções de lógica de programação
 - Noções básicas de estatística
 - Noções básicas de inglês (para facilitar pesquisas e entendimento das funções)
-
-\bigskip
-
-**Conteúdo de SQL:**
-
-- Conceito de Banco de Dados;
-- A linguagem SQL;
-- Vantagens da linguagem SQL;
-- Comandos SQL;
-- Como instalar e configurar o softwarer DBeaver;
-- Como instalar e configurar o Driver ODBC no Windows 10;
-- Explorando o comando select:
-    - Consultas básicas;
-    - Usando ALIAS;
-    - Cláusula ORDER BY;
-    - Cláusula DISTINCT;
-    - Criando grupos com a cláusula CASE;
-    - Aplicando filtros a seleção;
-    - Operadores e Precedência;
-    - Agrupando dados.
-- Junções de Tabelas ou Consultas.
 
 \bigskip
 
@@ -114,8 +88,8 @@ O material completo do curso está disponível em:
     
 \bigskip    
     
-- Manipulação da PDAD 2018
-    - Carga da Pesquisa Distrital por Amostra de Domicílios 2018
+- Manipulação da PDAD 2021
+    - Carga da Pesquisa Distrital por Amostra de Domicílios 2021
     - Consultas ao banco de dados da Codeplan
     - Introdução ao `tidyverse`
     - Utilização do pacote `survey` para pesquisas amostrais
