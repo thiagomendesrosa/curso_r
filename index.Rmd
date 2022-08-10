@@ -256,7 +256,7 @@ citation("tidyverse")
 Dentro do R, alguns operadores básicos são constantemente utilizados. Os mais comuns são:
 
 ```{r, echo=F,results='asis'}
-knitr::kable(
+kableExtra::kable(
 data.frame(Operadores=c("+","-","*","/","^ ou **", "%%","%/%"),
            Descrição=c("Adição","Subtração","Multiplicação",
                        "Divisão","Exponenciação","Resto da divisão","Divisão inteira")),
@@ -497,7 +497,7 @@ As estruturas dos `data frames` e `tibble`, focos deste curso, serão tratadas e
 
 Para finalizar, temos alguns números/valores especiais no R: `-Inf`, `Inf`, `NA` e `NaN`. Os dois primeiros se referem ao infinito em ambas as direções, enquanto os dois últimos são os valores ausentes. Enquanto o `NaN` se refere a valores "não numéricos", funcionando como nulo, os valores ausentes propriamente ditos são da forma `NA`, podendo assumir diferentes classes. Há ainda o objeto da classe `NULL`, que seria um objeto vazio. Usualmente ele é utilizado em definições de listas com tamanho zero.
 
-```{r, warning=FALSE,echo=FALSE}
+```{r, warning=FALSE}
 1/Inf # Divisão de 1 por infinito
 -1/0 # Infinito - divisão de 1 por zero (conceito de limite)
 1/0-1/0 # Infinito menos infinito - Indefinido (não numérico)
