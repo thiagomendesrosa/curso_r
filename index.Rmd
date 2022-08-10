@@ -697,7 +697,7 @@ O site [stackoverflow](https://stackoverflow.com/questions/tagged/r) é outra ex
 
 Por fim, uma boa e velha máquina de buscas é fundamental. Quase todas as repostas você encontrará com sua utilização.
 
-<img src="http://material.curso-r.com/rbase/figures/ajuda_google.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
+<img src="figuras/ajuda_google.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
 
 # Carga da PDAD 2021
 
@@ -2434,7 +2434,7 @@ Os títulos das seções são criados com o símbolo `#`. Caso queiramos criar s
 
 Após ser escrito o relatório, precisamos compilar o documento, que é realizado com o auxílio dos pacotes `knit` e `pandoc`. O primeiro deles cria um arquivo com os elementos textuais e do R, no formato `.md`, que posteriormente é convertido para o formato desejado com o segundo pacote.
 
-<img src="https://d33wubrfki0l68.cloudfront.net/61d189fd9cdf955058415d3e1b28dd60e1bd7c9b/9791d/images/rmarkdownflow.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
+<img src="figuras/rmarkdownflow.png" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
 
 Rode o arquivo de exemplo, clicando no botão `knit`, para verificar o resultado. O RStudio pedirá para você indicar o nome e o local do arquivo a ser criado. Toda vez que você "tricotar" o documento, o R salva e executa todos os passos elencados anteriormente automaticamente. 
 
@@ -2636,5 +2636,5 @@ Aplicações em R e Extensões ***
 
 Qualquer dúvida, mande um e-mail para [thiago.rosa@codeplan.df.gov.br](thiago.rosa@codeplan.df.gov.br).
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/Thank-you-word-cloud.jpg/800px-Thank-you-word-cloud.jpg" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
+<img src="figuras/download.jpg" style="width: 800px;display: block;margin-left: auto;margin-right: auto "/>
 
