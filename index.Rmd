@@ -1756,7 +1756,8 @@ inflacao_long %>%
   labs(y="Inflação mensal",
        x="Período")+
   # Alterar a posição da legenda
-  theme(legend.position = "bottom")
+  theme(legend.position = "bottom",
+        axis.text.x = element_text(angle=90))
 ```
 
 ## Criação da variável "renda domiciliar per capita"
